@@ -10,3 +10,6 @@ This is a project to create an Android Sample app.
 
 ### Kotlin style guide
 - https://developer.android.com/kotlin/style-guide?hl=ko
+
+## Test API
+- https://developers.naver.com/docs/serviceapi/search/movie/movie.md#%EC%98%81%ED%99%94
