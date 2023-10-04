@@ -25,5 +25,6 @@ include(
     ":core:model",
     ":core:ui",
     ":core:testing",
-    ":core:datastore"
+    ":core:datastore",
+    ":feature:main",
 )

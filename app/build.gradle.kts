@@ -33,7 +33,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.immutable)
-    implementation(project(mapOf("path" to ":core:designsystem")))
+    implementation(projects.feature.main)
+    implementation(projects.core.designsystem)
 
 
 }

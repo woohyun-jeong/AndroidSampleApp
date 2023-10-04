@@ -1,4 +1,4 @@
-package com.example.sampleapp
+package com.example.sampleapp.feature.main
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -11,7 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.sampleapp.core.designsystem.theme.KnightsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
