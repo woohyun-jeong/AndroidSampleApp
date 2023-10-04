@@ -16,4 +16,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "SampleApp"
-include(":app")
+include(
+    ":app",
+    ":core:designsystem",
+    ":core:data",
+    ":core:domain",
+    ":core:navigation",
+    ":core:model",
+    ":core:ui",
+    ":core:testing",
+    ":core:datastore"
+)

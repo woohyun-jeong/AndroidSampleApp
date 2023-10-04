@@ -1,4 +1,5 @@
 import com.example.sampleapp.configureHiltAndroid
+import com.example.sampleapp.configureKotestAndroid
 import com.example.sampleapp.configureKotlinAndroid
 
 plugins {
@@ -7,4 +8,4 @@ plugins {
 
 configureKotlinAndroid()
 configureHiltAndroid()
-//configureKotestAndroid()
+configureKotestAndroid()

@@ -1,7 +1,7 @@
-import com.example.sampleapp.configureCompose
-
 plugins {
     id("example.android.application")
+    id("example.android.compose")
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -16,31 +16,24 @@ android {
 
     }
 
-    configureCompose()
-
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.kotlinx.immutable)
+    implementation(project(mapOf("path" to ":core:designsystem")))
 
-    implementation(libs.androidx.compose.material3)
-//    implementation(libs.androidx.compose.ui.core)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-
-    testImplementation(libs.junit4)
-
-    androidTestImplementation(libs.androidx.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.test)
-
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.testManifest)
 
 }
