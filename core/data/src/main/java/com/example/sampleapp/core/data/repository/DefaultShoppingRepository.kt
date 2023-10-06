@@ -11,7 +11,7 @@ internal class DefaultShoppingRepository @Inject constructor(
     private val shoppingSearchApi: ShoppingSearchApi
 ) : ShoppingRepository {
 
-    override suspend fun getAllShopping(start: Int): Flow<Shopping> {
+    override suspend fun getAllShopping(start: Int): Flow<List<Shopping>> {
         return flow {
             val response = shoppingSearchApi.getShoppingItems(
                 query = ShoppingSearchApi.NAVER_QUERY_DEFAULT,
@@ -23,9 +23,9 @@ internal class DefaultShoppingRepository @Inject constructor(
                 .asSequence()
                 .map {
                     it.title = getTitleWithRemovedSearchTag(it.title, ShoppingSearchApi.NAVER_QUERY_DEFAULT)
-                    return@map it
-                }.forEach {
-                    emit(it.toData())
+                    return@map it.toData()
+                }.also {
+                    emit(it.toList())
                 }
         }
     }
@@ -34,7 +34,7 @@ internal class DefaultShoppingRepository @Inject constructor(
         query: String,
         sort: String,
         start: Int
-    ): Flow<Shopping> {
+    ): Flow<List<Shopping>> {
         return flow {
             val response = shoppingSearchApi.getShoppingItemsSort(
                 query = query,
@@ -47,9 +47,9 @@ internal class DefaultShoppingRepository @Inject constructor(
                 .asSequence()
                 .map {
                     it.title = getTitleWithRemovedSearchTag(it.title, query)
-                    return@map it
-                }.forEach {
-                    emit(it.toData())
+                    return@map it.toData()
+                }.also {
+                    emit(it.toList())
                 }
         }
     }

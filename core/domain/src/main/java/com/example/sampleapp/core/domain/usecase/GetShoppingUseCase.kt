@@ -9,7 +9,7 @@ class GetShoppingUseCase @Inject constructor(
     private val shoppingRepository: ShoppingRepository,
 ) {
 
-    suspend operator fun invoke(start: Int): Flow<Shopping> {
+    suspend operator fun invoke(start: Int): Flow<List<Shopping>> {
         return shoppingRepository.getAllShopping(start)
     }
 
