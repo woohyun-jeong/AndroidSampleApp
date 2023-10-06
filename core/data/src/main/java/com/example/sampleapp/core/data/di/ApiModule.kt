@@ -1,7 +1,5 @@
 package com.example.sampleapp.core.data.di
 
-import com.example.sampleapp.core.data.api.GithubApi
-import com.example.sampleapp.core.data.api.GithubRawApi
 import com.example.sampleapp.core.data.api.MovieSearchApi
 import com.example.sampleapp.core.data.api.interceptor.NaverAuthInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -13,25 +11,32 @@ import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module
 @InstallIn(SingletonComponent::class)
+@Module
 internal object ApiModule {
 
     @Provides
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    }
+    @Provides
     @Singleton
     fun provideOkhttpClient(
+        logging: HttpLoggingInterceptor,
         interceptor: Interceptor
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(interceptor)
+        .addNetworkInterceptor(logging)
+        .build()
 
     @Provides
     @Singleton
-    fun provideNaverInterceptor(
-        json: Json,
-    ): NaverAuthInterceptor {
+    fun provideNaverInterceptor(): NaverAuthInterceptor {
         return NaverAuthInterceptor()
     }
 
@@ -59,4 +64,10 @@ internal object ApiModule {
     fun provideJson(): Json = Json {
         ignoreUnknownKeys = true
     }
+
+    @Provides
+    fun providesApiService(retrofit: Retrofit): MovieSearchApi {
+        return retrofit.create(MovieSearchApi::class.java)
+    }
+
 }

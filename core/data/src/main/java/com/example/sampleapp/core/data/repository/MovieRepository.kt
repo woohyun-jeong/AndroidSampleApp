@@ -1,7 +1,6 @@
 package com.example.sampleapp.core.data.repository
 
 import com.example.sampleapp.core.model.Movie
-import com.example.sampleapp.core.model.Session
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {

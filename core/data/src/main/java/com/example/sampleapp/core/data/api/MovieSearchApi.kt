@@ -1,9 +1,7 @@
 package com.example.sampleapp.core.data.api
 
-import com.example.sampleapp.core.data.api.model.ContributorResponse
 import com.example.sampleapp.core.data.api.model.MovieSearchResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 internal interface MovieSearchApi {

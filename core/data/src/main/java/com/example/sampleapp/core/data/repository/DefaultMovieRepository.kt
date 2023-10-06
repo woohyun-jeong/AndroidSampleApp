@@ -1,10 +1,8 @@
 package com.example.sampleapp.core.data.repository
 
-import com.example.sampleapp.core.data.api.GithubRawApi
 import com.example.sampleapp.core.data.api.MovieSearchApi
 import com.example.sampleapp.core.data.mapper.toData
 import com.example.sampleapp.core.model.Movie
-import com.example.sampleapp.core.model.Sponsor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
