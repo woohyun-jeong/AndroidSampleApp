@@ -1,6 +1,6 @@
 package com.example.sampleapp.core.data.di
 
-import com.example.sampleapp.core.data.api.MovieSearchApi
+import com.example.sampleapp.core.data.api.ShoppingSearchApi
 import com.example.sampleapp.core.data.api.interceptor.NaverAuthInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -21,24 +21,21 @@ import javax.inject.Singleton
 internal object ApiModule {
 
     @Provides
-    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
     @Provides
     @Singleton
     fun provideOkhttpClient(
         logging: HttpLoggingInterceptor,
-        interceptor: Interceptor
+        auth: NaverAuthInterceptor,
     ): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(interceptor)
+        .addInterceptor(auth)
         .addNetworkInterceptor(logging)
         .build()
 
     @Provides
     @Singleton
-    fun provideNaverInterceptor(): NaverAuthInterceptor {
-        return NaverAuthInterceptor()
-    }
+    fun provideNaverInterceptor(): NaverAuthInterceptor = NaverAuthInterceptor()
 
     @Provides
     @Singleton
@@ -50,24 +47,19 @@ internal object ApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieSearchApi(
+    fun provideShoppingSearchApi(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
-    ): MovieSearchApi = Retrofit.Builder()
-        .baseUrl("https://openapi.naver.com/v1/search/movie.json")
+    ): ShoppingSearchApi = Retrofit.Builder()
+        .baseUrl("https://openapi.naver.com/v1/search/")
         .addConverterFactory(converterFactory)
         .client(okHttpClient).build()
-        .create(MovieSearchApi::class.java)
+        .create(ShoppingSearchApi::class.java)
 
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
         ignoreUnknownKeys = true
-    }
-
-    @Provides
-    fun providesApiService(retrofit: Retrofit): MovieSearchApi {
-        return retrofit.create(MovieSearchApi::class.java)
     }
 
 }

@@ -18,4 +18,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.datetime)
     testImplementation(libs.turbine)
+    testImplementation(libs.junit4)
+    testImplementation(libs.kotlin.test)
 }

@@ -4,7 +4,7 @@ import com.example.sampleapp.core.data.api.model.SessionResponse
 import com.example.sampleapp.core.data.api.model.SponsorResponse
 import retrofit2.http.GET
 
-internal interface MovieSearchRawApi {
+internal interface ShoppingSearchRawApi {
 
     @GET("/droidknights/DroidKnights2023_App/main/core/data/src/main/assets/sponsors.json")
     suspend fun getSponsors(): List<SponsorResponse>
