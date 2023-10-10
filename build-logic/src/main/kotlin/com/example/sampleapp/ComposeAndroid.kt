@@ -31,3 +31,11 @@ internal fun Project.configureComposeAndroid() {
     }
 }
 
+internal fun Project.configureCoilAndroid() {
+    val libs = extensions.libs
+    androidExtension.apply {
+        dependencies {
+            add("implementation", libs.findLibrary("compose.coil").get())
+        }
+    }
+}

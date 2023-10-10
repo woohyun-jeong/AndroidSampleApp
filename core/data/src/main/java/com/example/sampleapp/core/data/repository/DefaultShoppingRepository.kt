@@ -32,14 +32,14 @@ internal class DefaultShoppingRepository @Inject constructor(
 
     override suspend fun getSearchShopping(
         query: String,
-        sort: String,
+        sort: ShoppingSearchApi.ShoppingSort,
         start: Int
     ): Flow<List<Shopping>> {
         return flow {
             val response = shoppingSearchApi.getShoppingItemsSort(
                 query = query,
                 start = start,
-                sort = sort
+                sort = sort.name
             )
 
             response

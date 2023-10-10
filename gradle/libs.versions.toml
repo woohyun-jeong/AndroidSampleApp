@@ -21,6 +21,7 @@ kotlinxImmutable = "0.3.5"
 
 landscapist = "2.2.5"
 composeShimmer = "1.0.5"
+composeCoil = "2.4.0"
 
 junit4 = "4.13.2"
 junitVintageEngine = "5.10.0"
@@ -84,6 +85,7 @@ landscapist-placeholder = { group = "com.github.skydoves", name = "landscapist-p
 landscapist-animation = { group = "com.github.skydoves", name = "landscapist-animation" }
 
 compose-shimmer = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "composeShimmer"}
+compose-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "composeCoil"}
 
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junitVintageEngine" }

@@ -24,7 +24,6 @@ include(
     ":core:navigation",
     ":core:model",
     ":core:ui",
-    ":core:testing",
     ":core:datastore",
     ":feature:main",
 )
