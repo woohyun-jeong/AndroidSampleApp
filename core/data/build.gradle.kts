@@ -8,19 +8,6 @@ plugins {
 
 android {
     namespace = "com.example.sampleapp.core.data"
-
-    buildFeatures {
-        buildConfig = true
-    }
-
-    defaultConfig {
-        buildConfigField("String", "NAVER_CLIENT_ID", getApiKey("NAVER_CLIENT_ID"))
-        buildConfigField("String", "NAVER_CLIENT_SECRET", getApiKey("NAVER_CLIENT_SECRET"))
-    }
-}
-
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {

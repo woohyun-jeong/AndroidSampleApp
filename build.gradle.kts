@@ -18,4 +18,5 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.verify.detekt) apply false
+    alias(libs.plugins.android.library) apply false
 }
