@@ -39,3 +39,12 @@ internal fun Project.configureCoilAndroid() {
         }
     }
 }
+
+internal fun Project.configurePagingAndroid() {
+    val libs = extensions.libs
+    androidExtension.apply {
+        dependencies {
+            add("implementation", libs.findLibrary("compose.paging").get())
+        }
+    }
+}

@@ -26,4 +26,5 @@ include(
     ":core:ui",
     ":core:datastore",
     ":feature:main",
+    ":feature:pager"
 )

@@ -18,6 +18,18 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.example.sampleapp.feature.pager.VerticalPagingActivity"
+            android:exported="true"
+            android:configChanges="uiMode"
+            android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

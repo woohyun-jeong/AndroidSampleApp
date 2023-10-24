@@ -2,7 +2,11 @@ package com.example.sampleapp.core.data.di
 
 import com.example.sampleapp.core.data.api.ShoppingSearchApi
 import com.example.sampleapp.core.data.api.interceptor.NaverAuthInterceptor
+import com.example.sampleapp.core.data.repository.DefaultShoppingRepository
+import com.example.sampleapp.core.data.repository.ShoppingRepository
+import com.example.sampleapp.core.data.source.PageKeyedShoppingPagingSource
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,4 +66,8 @@ internal object ApiModule {
         ignoreUnknownKeys = true
     }
 
+    @Provides
+    fun provideShoppingRepository(
+        shoppingSearchApi: ShoppingSearchApi,
+    ): PageKeyedShoppingPagingSource = PageKeyedShoppingPagingSource(shoppingSearchApi)
 }

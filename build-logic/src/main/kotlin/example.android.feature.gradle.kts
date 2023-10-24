@@ -1,4 +1,5 @@
 import com.example.sampleapp.configureHiltAndroid
+import com.example.sampleapp.configurePagingAndroid
 import com.example.sampleapp.libs
 
 plugins {
@@ -13,6 +14,7 @@ android {
 }
 
 configureHiltAndroid()
+configurePagingAndroid()
 
 dependencies {
     implementation(project(":core:model"))
@@ -30,4 +32,5 @@ dependencies {
     implementation(libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
     implementation(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
     implementation(libs.findLibrary("compose.coil").get())
+    implementation(libs.findLibrary("compose.paging").get())
 }

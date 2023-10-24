@@ -22,6 +22,7 @@ kotlinxImmutable = "0.3.5"
 landscapist = "2.2.5"
 composeShimmer = "1.0.5"
 composeCoil = "2.4.0"
+composePaging = "1.0.0-alpha18"
 
 junit4 = "4.13.2"
 junitVintageEngine = "5.10.0"
@@ -88,6 +89,7 @@ landscapist-animation = { group = "com.github.skydoves", name = "landscapist-ani
 
 compose-shimmer = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "composeShimmer"}
 compose-coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "composeCoil"}
+compose-paging = { group = "androidx.paging", name = "paging-compose", version.ref = "composePaging"}
 
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junitVintageEngine" }
