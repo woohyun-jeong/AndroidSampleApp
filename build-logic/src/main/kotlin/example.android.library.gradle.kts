@@ -1,3 +1,4 @@
+import com.example.sampleapp.configureCoilAndroid
 import com.example.sampleapp.configureCoroutineAndroid
 import com.example.sampleapp.configureDataAndroid
 import com.example.sampleapp.configureHiltAndroid
@@ -16,3 +17,4 @@ configureCoroutineAndroid()
 configureHiltAndroid()
 configureDataAndroid()
 configurePagingAndroid()
+configureCoilAndroid()
