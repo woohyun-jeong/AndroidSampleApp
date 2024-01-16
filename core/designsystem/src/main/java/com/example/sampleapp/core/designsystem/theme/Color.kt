@@ -44,3 +44,6 @@ val Red05 = Color(0xFF601410)
 val Red06 = Color(0xFF410E0B)
 
 val Cosmos = Color(0xFF151515)
+
+val Blue01 = Color(0xFF426BF9)
+val Blue02 = Color(0xFF2F2B80)
