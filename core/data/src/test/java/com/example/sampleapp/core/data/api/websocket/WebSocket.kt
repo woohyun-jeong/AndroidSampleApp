@@ -1,37 +1,33 @@
 package com.example.sampleapp.core.data.api.websocket
 
-import com.example.sampleapp.core.data.websocket.WebSocketManger
+import com.example.sampleapp.core.data.websocket.DefaultWebSocketListener
+import com.example.sampleapp.core.data.websocket.WebSocketMangerImp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
-import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.WebSocketListener
 import okio.ByteString
-import org.junit.jupiter.api.AfterAll
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.TimeUnit
 
 
 class WebSocket {
-    private val webSocketManger = WebSocketManger()
+    private val webSocketMangerImp = WebSocketMangerImp()
 
     @DisplayName("WebSocket_기본_동작_테스트")
     @Test
     fun webSocketTest() {
         runBlocking(Dispatchers.IO) {
-            val listener = UpBitWebSocketListener(webSocketManger)
-            webSocketManger.createConnectWebSocket(
+            val listener = UpBitWebSocketListener(webSocketMangerImp)
+            webSocketMangerImp.createConnectWebSocket(
                 1234,
                 "wss://api.upbit.com/websocket/v1",
                 listener
             )
-            webSocketManger.printConnectedWebSocketStatus("webSocketTest")
+            webSocketMangerImp.printConnectedWebSocketStatus("webSocketTest")
             delay(10000)
         }
     }
@@ -40,42 +36,38 @@ class WebSocket {
     @Test
     fun webSocketClearTest() {
         runBlocking(Dispatchers.IO) {
-            webSocketTest()
+            val listener = UpBitWebSocketListener(webSocketMangerImp)
+            webSocketMangerImp.createConnectWebSocket(
+                1234,
+                "wss://api.upbit.com/websocket/v1",
+                listener
+            )
+            webSocketMangerImp.printConnectedWebSocketStatus("webSocketTest")
 
-            webSocketManger.clearConnectWebSocket()
+            webSocketMangerImp.clearConnectWebSocket()
+            webSocketMangerImp.printConnectedWebSocketStatus("webSocketTest")
             delay(10000)
         }
     }
 
-    @DisplayName("WebSocket_Reconnect_테스트")
-    @Test
-    fun webSocketReconnectTest() {
-        runBlocking(Dispatchers.IO) {
-            webSocketTest()
-
-            webSocketManger.reconnectWebSocket(1234)
-            delay(10000)
-        }
-    }
-
-    class UpBitWebSocketListener(private val webSocketManger: WebSocketManger) :
-        WebSocketManger.DefaultWebSocketListener() {
+    class UpBitWebSocketListener(private val webSocketMangerImp: WebSocketMangerImp) :
+        WebSocketListener() {
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
             super.onClosed(webSocket, code, reason)
             println("WebSocketListener onClosed code = $code, reason = $reason")
-            webSocketManger.printConnectedWebSocketStatus("onClosed")
+            webSocketMangerImp.printConnectedWebSocketStatus("onClosed")
         }
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
             super.onClosing(webSocket, code, reason)
             println("WebSocketListener onClosing code = $code, reason = $reason")
-            webSocketManger.printConnectedWebSocketStatus("onClosing")
+            webSocketMangerImp.printConnectedWebSocketStatus("onClosing")
         }
 
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             super.onFailure(webSocket, t, response)
             println("WebSocketListener onFailure response = $response, throwable = $t")
-            webSocketManger.printConnectedWebSocketStatus("onFailure")
+            webSocketMangerImp.printConnectedWebSocketStatus("onFailure")
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
@@ -107,7 +99,7 @@ class WebSocket {
                     "  }\n" +
                     "]"
             webSocket.send(testRequest)
-            webSocketManger.printConnectedWebSocketStatus("onOpen")
+            webSocketMangerImp.printConnectedWebSocketStatus("onOpen")
         }
     }
 }
