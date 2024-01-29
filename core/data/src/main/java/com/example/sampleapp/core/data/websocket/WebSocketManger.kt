@@ -1,5 +1,6 @@
 package com.example.sampleapp.core.data.websocket
 
+import android.util.Log
 import com.example.sampleapp.core.data.di.ApiModule
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -7,10 +8,28 @@ import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+import org.jetbrains.annotations.TestOnly
 import java.util.concurrent.TimeUnit
 
 class WebSocketManger {
     private val connectedWebSocketHashMap: HashMap<Int, ConnectedWebSocketResult> = hashMapOf()
+
+    @TestOnly
+    fun printConnectedWebSocketStatus(tag: String) {
+        if (connectedWebSocketHashMap.isEmpty()) {
+            println("$tag printConnectedWebSocketStatus() is Empty")
+            return
+        }
+
+        connectedWebSocketHashMap.forEach {
+            val key = it.key
+            val value = it.value
+
+            val isClose = value.listener.isClose
+            val isFailure = value.listener.isFailure
+            println("$tag printConnectedWebSocketStatus() key = $key, value = $value, isClose = $isClose, isFailure = $isFailure")
+        }
+    }
 
     /**
      * TODO
@@ -20,6 +39,7 @@ class WebSocketManger {
      * @param url
      * @param listener
      */
+    @Throws(Exception::class)
     fun createConnectWebSocket(id: Int, url: String, listener: DefaultWebSocketListener) {
         runCatching {
             Builder()
@@ -42,6 +62,7 @@ class WebSocketManger {
      * @param request
      * @param listener
      */
+    @Throws(Exception::class)
     fun createConnectWebSocket(id: Int, request: Request, listener: DefaultWebSocketListener) {
         runCatching {
             Builder()
@@ -56,14 +77,14 @@ class WebSocketManger {
         }
     }
 
+    @Throws(Exception::class)
     fun reconnectWebSocket(id: Int) {
-        runCatching {
-            connectedWebSocketHashMap[id] ?: throw NullPointerException()
-        }.onSuccess { result ->
-            if(!result.listener.isClose)
-                disconnectWebSocket(id)
+         runCatching {
+            val socket = findWebSocket(id)
 
-            createConnectWebSocket(id, result.request, result.listener)
+             //재연결 작업 시작
+             disconnectWebSocket(id)
+             createConnectWebSocket(id, socket.request, socket.listener)
         }.onFailure { error ->
             error.printStackTrace()
             throw error
@@ -78,16 +99,24 @@ class WebSocketManger {
     @Throws(Exception::class)
     fun disconnectWebSocket(id: Int) {
         runCatching {
-            connectedWebSocketHashMap[id]?.also { data ->
-                data.webSocket.close(WEB_SOCKET_FINISH_CODE, WEB_SOCKET_FINISH_MESSAGE)
+            val socket = findWebSocket(id)
+
+            if(socket.listener.isClose) {
+                Log.d(TAG, "disconnectWebSocket() isClose is true, not Close Task")
+                return@runCatching
             }
-        }.onSuccess { _ ->
+
+            socket.webSocket.close(WEB_SOCKET_FINISH_CODE, WEB_SOCKET_FINISH_MESSAGE)
+        }.onSuccess {
             connectedWebSocketHashMap.remove(id)
         }.onFailure { error ->
             error.printStackTrace()
             throw error
         }
     }
+
+    @Throws(ArrayIndexOutOfBoundsException::class, NullPointerException::class)
+    private fun findWebSocket(id: Int) = connectedWebSocketHashMap[id] ?: throw NullPointerException("$TAG findWebSocket() is null")
 
     /**
      * 연결된 모든 WebSocket 연결 닫기 실행
@@ -101,6 +130,11 @@ class WebSocketManger {
             val value = it.value
 
             runCatching {
+                if(value.listener.isClose) {
+                    Log.d(TAG, "clearConnectWebSocket() isClose is true, not Close Task")
+                    return@runCatching
+                }
+
                 value.webSocket.close(WEB_SOCKET_FINISH_CODE, WEB_SOCKET_FINISH_MESSAGE)
             }.onSuccess {
                 connectedWebSocketHashMap.remove(key)
@@ -191,8 +225,8 @@ class WebSocketManger {
         val listener: DefaultWebSocketListener
     )
 
-    class DefaultWebSocketListener : WebSocketListener() {
-        var isClose: Boolean = false
+    open class DefaultWebSocketListener : WebSocketListener() {
+        var isClose: Boolean = true
         var isFailure: Boolean = false
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
