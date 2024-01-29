@@ -34,6 +34,8 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.sampleapp.core.data.api.websocket.WebSocketListener
+import com.example.sampleapp.core.data.api.websocket.WebSocketTestClient
 import com.example.sampleapp.core.designsystem.theme.Blue01
 import com.example.sampleapp.core.designsystem.theme.Gray
 import com.example.sampleapp.core.designsystem.theme.KnightsTheme
@@ -79,6 +81,7 @@ internal fun SampleScreen(
         }
         Spacer(Modifier.requiredHeight(spaceHeight))
         PrimaryButton()
+        CloseButton()
         Spacer(Modifier.requiredHeight(spaceHeight))
         SliderSample()
         Spacer(Modifier.requiredHeight(spaceHeight))
@@ -92,9 +95,19 @@ internal fun SampleScreen(
 private fun PrimaryButton(
     modifier: Modifier = Modifier
 ){
+    val context = LocalContext.current
     Button(
         shape = RectangleShape,
-        onClick = { /*TODO*/ },
+        onClick = {
+            Toast.makeText(context, "클릭버튼", Toast.LENGTH_SHORT).show()
+            if (WebSocketTestClient.webSocket == null) {
+                WebSocketTestClient.webSocket = WebSocketTestClient.client.newWebSocket(
+                    WebSocketTestClient.request,
+                    WebSocketTestClient.listener
+                )
+            }
+
+        },
         colors = ButtonDefaults.buttonColors(
             contentColor = Blue01,
             containerColor = Blue01,
@@ -103,6 +116,32 @@ private fun PrimaryButton(
         modifier = modifier
     ) {
         Text(text = "테스트", color = Color.White)
+    }
+}
+
+@Composable
+private fun CloseButton(
+    modifier: Modifier = Modifier
+){
+    val context = LocalContext.current
+    Button(
+        shape = RectangleShape,
+        onClick = {
+            Toast.makeText(context, "종료버튼", Toast.LENGTH_SHORT).show()
+            if (WebSocketTestClient.webSocket != null) {
+                WebSocketTestClient.webSocket?.close(WebSocketListener.NORMAL_CLOSURE_STATUS, null)
+                WebSocketTestClient.webSocket = null
+            }
+
+        },
+        colors = ButtonDefaults.buttonColors(
+            contentColor = Blue01,
+            containerColor = Blue01,
+            disabledContainerColor = Gray,
+            disabledContentColor =Gray),
+        modifier = modifier
+    ) {
+        Text(text = "종료", color = Color.White)
     }
 }
 
