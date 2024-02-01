@@ -1,6 +1,10 @@
 package com.example.sampleapp.feature.sample
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -28,7 +32,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LifecycleObserver
 import com.example.sampleapp.core.data.api.websocket.WebSocketListener
 import com.example.sampleapp.core.data.api.websocket.WebSocketTestClient
 import com.example.sampleapp.core.data.event.EventObserver
@@ -37,6 +40,7 @@ import com.example.sampleapp.core.designsystem.theme.Gray
 import com.example.sampleapp.core.designsystem.theme.KnightsTheme
 import com.example.sampleapp.feature.sample.appbar.AppBarSample
 import com.example.sampleapp.feature.sample.nav.BottomNavBar
+import com.example.sampleapp.feature.sample.services.SampleWebsocketService
 import com.example.sampleapp.feature.sample.slider.SliderSample
 import com.example.sampleapp.feature.sample.slider.StepsSliderSample
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,9 +53,34 @@ import java.util.Timer
 import java.util.TimerTask
 import kotlin.random.Random
 
+
 @AndroidEntryPoint
 class SampleActivity : AppCompatActivity() {
+    protected var mService: SampleWebsocketService? = null
+    private var mBound: Boolean = false
 
+    private val mConnection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            Log.i("SampleActivity", "onServiceConnected")
+            val binder: SampleWebsocketService.WebSocketsBinder = service as SampleWebsocketService.WebSocketsBinder
+            mService = binder.service
+            mBound = true
+
+//            mService?.let {
+//                it?.textLiveData?.observe(this@SampleActivity) {
+//                    Log.d("SampleActivity", it)
+//                }
+//
+//            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName) {
+            Log.i("SampleActivity", "onServiceDisconnected")
+            mService = null
+            mBound = false
+
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -65,6 +94,27 @@ class SampleActivity : AppCompatActivity() {
                 }
             }
         }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            EventObserver.eventSubscriber.collect {
+                Log.d("SampleActivity", "eventSubscriber id = ${it.id}, data = ${it.data.getString("message")}")
+
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val intent = Intent(this, SampleWebsocketService::class.java)
+        bindService(intent, mConnection, BIND_AUTO_CREATE)
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unbindService(mConnection)
+        mBound = false
+
     }
 
     private val workList = mutableListOf<Thread>()

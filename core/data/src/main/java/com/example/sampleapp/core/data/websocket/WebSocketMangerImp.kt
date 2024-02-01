@@ -1,5 +1,6 @@
 package com.example.sampleapp.core.data.websocket
 
+import android.util.Log
 import com.example.sampleapp.core.data.di.ApiModule
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -27,14 +28,20 @@ class WebSocketMangerImp : WebSocketManager {
     @Throws(Exception::class)
     override fun createConnectWebSocket(id: Int, url: String, listener: WebSocketListener) {
         runCatching {
+            Log.i("SampleWebsocketService", "createConnectWebSocket")
+
             Builder()
                 .request(url)
                 .listener(listener)
                 .connect()
         }.onSuccess { webSocket ->
+            Log.i("SampleWebsocketService", "onSuccess")
+
             connectedWebSocketHashMap[id] = webSocket
         }.onFailure { error ->
             error.printStackTrace()
+            Log.i("SampleWebsocketService", "onFailure")
+
             throw error
         }
     }

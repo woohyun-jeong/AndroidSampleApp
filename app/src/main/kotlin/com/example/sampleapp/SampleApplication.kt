@@ -40,19 +40,19 @@ class SampleApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
-        CoroutineScope(Dispatchers.Default).launch {
-            EventObserver.eventSubscriber.collect {
-                if (it.id != tag)
-                    return@collect
-
-                runCatching {
-                    Log.d(tag, "eventSubscriber id = ${it.id}, data = ${it.data}")
-                    webSocketManagerImp.clearConnectWebSocket()
-                }.onFailure { error ->
-                    error.printStackTrace()
-                }
-            }
-        }
+//        CoroutineScope(Dispatchers.Default).launch {
+//            EventObserver.eventSubscriber.collect {
+//                if (it.id != tag)
+//                    return@collect
+//
+//                runCatching {
+//                    Log.d(tag, "eventSubscriber id = ${it.id}, data = ${it.data}")
+//                    webSocketManagerImp.clearConnectWebSocket()
+//                }.onFailure { error ->
+//                    error.printStackTrace()
+//                }
+//            }
+//        }
 
         registerActivityLifecycleCallbacks(object: android.app.Application.ActivityLifecycleCallbacks{
             override fun onActivityCreated(activity: android.app.Activity, savedInstanceState: android.os.Bundle?) {
@@ -141,15 +141,15 @@ class SampleApplication : Application(), ImageLoaderFactory {
             }
         }
 
-        runCatching {
-            webSocketManagerImp.createConnectWebSocket(
-                id = 1234,
-                url = "wss://api.upbit.com/websocket/v1",
-                listener = listener
-            )
-        }.onFailure { error ->
-            error.printStackTrace()
-        }
+//        runCatching {
+//            webSocketManagerImp.createConnectWebSocket(
+//                id = 1234,
+//                url = "wss://api.upbit.com/websocket/v1",
+//                listener = listener
+//            )
+//        }.onFailure { error ->
+//            error.printStackTrace()
+//        }
 
     }
 
