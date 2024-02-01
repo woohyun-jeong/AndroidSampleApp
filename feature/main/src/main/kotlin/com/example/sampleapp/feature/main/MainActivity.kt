@@ -1,6 +1,8 @@
 package com.example.sampleapp.feature.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +52,7 @@ import com.example.sampleapp.core.designsystem.theme.LocalDarkTheme
 import com.example.sampleapp.core.designsystem.theme.Neon01
 import com.example.sampleapp.core.designsystem.theme.Neon05
 import com.example.sampleapp.core.model.Shopping
+import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +62,7 @@ import java.net.UnknownHostException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private val tag = "MainActivityTest"
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +80,36 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        startAppCloseService()
+    }
+
+    private fun startAppCloseService(){
+        startService(Intent(this@MainActivity, ClosingService::class.java))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(tag, "Activity onStart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(tag, "Activity onStop")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(tag, "Activity onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(tag, "Activity onResume")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(tag, "Activity onDestroy")
     }
 }
 

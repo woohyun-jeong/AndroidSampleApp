@@ -1,23 +1,19 @@
 package com.example.sampleapp.feature.sample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -26,16 +22,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleObserver
 import com.example.sampleapp.core.data.api.websocket.WebSocketListener
 import com.example.sampleapp.core.data.api.websocket.WebSocketTestClient
+import com.example.sampleapp.core.data.event.EventObserver
 import com.example.sampleapp.core.designsystem.theme.Blue01
 import com.example.sampleapp.core.designsystem.theme.Gray
 import com.example.sampleapp.core.designsystem.theme.KnightsTheme
@@ -44,7 +40,14 @@ import com.example.sampleapp.feature.sample.nav.BottomNavBar
 import com.example.sampleapp.feature.sample.slider.SliderSample
 import com.example.sampleapp.feature.sample.slider.StepsSliderSample
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.annotations.TestOnly
+import java.util.Timer
+import java.util.TimerTask
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class SampleActivity : AppCompatActivity() {
@@ -62,6 +65,38 @@ class SampleActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private val workList = mutableListOf<Thread>()
+    private val timer = Timer()
+
+    private fun hotStreamTest() {
+        for (index in 0..4) {
+            val target = Thread {
+                runBlocking(Dispatchers.Default) {
+                    EventObserver.eventSubscriber.collect {
+                        Log.d("SampleActivity", "threadId = $index, id = ${it.id}, data = ${it.data}")
+                    }
+                }
+            }
+
+            workList.add(target)
+            target.start()
+        }
+
+        Log.d("SampleActivity", "workList size = ${workList.size}")
+
+        val task = object : TimerTask() {
+            override fun run() {
+                CoroutineScope(Dispatchers.Default).launch {
+                    val id = Random.nextInt(0, 999)
+                    Log.d("SampleActivity", "send event id = ${id}")
+                    EventObserver.eventPublisher.tryEmit(EventObserver.Event(id.toString(), Bundle()))
+                }
+            }
+        }
+
+        timer.schedule(task, 0, 10000)
     }
 }
 
@@ -94,7 +129,7 @@ internal fun SampleScreen(
 @Composable
 private fun PrimaryButton(
     modifier: Modifier = Modifier
-){
+) {
     val context = LocalContext.current
     Button(
         shape = RectangleShape,
@@ -112,7 +147,8 @@ private fun PrimaryButton(
             contentColor = Blue01,
             containerColor = Blue01,
             disabledContainerColor = Gray,
-            disabledContentColor =Gray),
+            disabledContentColor = Gray
+        ),
         modifier = modifier
     ) {
         Text(text = "테스트", color = Color.White)
@@ -122,7 +158,7 @@ private fun PrimaryButton(
 @Composable
 private fun CloseButton(
     modifier: Modifier = Modifier
-){
+) {
     val context = LocalContext.current
     Button(
         shape = RectangleShape,
@@ -138,7 +174,8 @@ private fun CloseButton(
             contentColor = Blue01,
             containerColor = Blue01,
             disabledContainerColor = Gray,
-            disabledContentColor =Gray),
+            disabledContentColor = Gray
+        ),
         modifier = modifier
     ) {
         Text(text = "종료", color = Color.White)
@@ -148,24 +185,27 @@ private fun CloseButton(
 @TestOnly
 @Preview(showBackground = true, widthDp = 500, heightDp = 600)
 @Composable
-private fun TestBoxWithConstraints(){
+private fun TestBoxWithConstraints() {
     BoxWithConstraints {
         val rectangleHeight = 100.dp
         if (maxHeight < rectangleHeight * 2) {
             Box(
                 Modifier
                     .size(50.dp, rectangleHeight)
-                    .background(Color.Blue))
+                    .background(Color.Blue)
+            )
         } else {
             Column {
                 Box(
                     Modifier
                         .size(50.dp, rectangleHeight)
-                        .background(Color.Blue))
+                        .background(Color.Blue)
+                )
                 Box(
                     Modifier
                         .size(50.dp, rectangleHeight)
-                        .background(Color.Gray))
+                        .background(Color.Gray)
+                )
             }
         }
     }
@@ -174,6 +214,6 @@ private fun TestBoxWithConstraints(){
 @TestOnly
 @Preview(showBackground = true, widthDp = 500, heightDp = 600)
 @Composable
-private fun TestPrimaryButton(){
+private fun TestPrimaryButton() {
     PrimaryButton()
 }
