@@ -159,12 +159,8 @@ class WebSocketMangerImp : WebSocketManager {
             }
 
             //소켓 생성 검증
-            val result = task.getOrNull()
-            return if (result == null) {
-                throw NullPointerException("$TAG connect() result is null. Please not null")
-            } else {
-                ConnectedWebSocketResult(result, request!!, webSocketListener!!)
-            }
+            val result = task.getOrNull() ?: throw NullPointerException("$TAG connect() result is null. Please not null")
+            return ConnectedWebSocketResult(result, request!!, webSocketListener!!)
         }
 
         private fun createRequest(url: String) = Request.Builder()
