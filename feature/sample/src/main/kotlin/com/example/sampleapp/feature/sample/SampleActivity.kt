@@ -53,7 +53,6 @@ import java.util.Timer
 import java.util.TimerTask
 import kotlin.random.Random
 
-
 @AndroidEntryPoint
 class SampleActivity : AppCompatActivity() {
     protected var mService: SampleWebsocketService? = null
@@ -66,12 +65,6 @@ class SampleActivity : AppCompatActivity() {
             mService = binder.service
             mBound = true
 
-//            mService?.let {
-//                it?.textLiveData?.observe(this@SampleActivity) {
-//                    Log.d("SampleActivity", it)
-//                }
-//
-//            }
         }
 
         override fun onServiceDisconnected(name: ComponentName) {

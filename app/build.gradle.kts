@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.kotlinx.immutable)
     implementation(projects.feature.main)
     implementation(projects.core.designsystem)
+    implementation(project(mapOf("path" to ":feature:sample")))
 
 
 }

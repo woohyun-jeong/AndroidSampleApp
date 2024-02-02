@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.LruCache
+import androidx.lifecycle.Observer
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.DataSource
@@ -19,6 +20,7 @@ import coil.request.SuccessResult
 import com.example.sampleapp.core.data.event.EventObserver
 import com.example.sampleapp.core.data.websocket.WebSocketMangerImp
 import com.example.sampleapp.core.model.Shopping
+import com.example.sampleapp.feature.sample.broadcast.ConnectivityWatcher
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.migration.CustomInjection
 import kotlinx.coroutines.CoroutineScope
@@ -40,19 +42,6 @@ class SampleApplication : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
-//        CoroutineScope(Dispatchers.Default).launch {
-//            EventObserver.eventSubscriber.collect {
-//                if (it.id != tag)
-//                    return@collect
-//
-//                runCatching {
-//                    Log.d(tag, "eventSubscriber id = ${it.id}, data = ${it.data}")
-//                    webSocketManagerImp.clearConnectWebSocket()
-//                }.onFailure { error ->
-//                    error.printStackTrace()
-//                }
-//            }
-//        }
 
         registerActivityLifecycleCallbacks(object: android.app.Application.ActivityLifecycleCallbacks{
             override fun onActivityCreated(activity: android.app.Activity, savedInstanceState: android.os.Bundle?) {
