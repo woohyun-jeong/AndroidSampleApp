@@ -38,11 +38,6 @@ import com.example.sampleapp.core.data.event.EventObserver
 import com.example.sampleapp.core.designsystem.theme.Blue01
 import com.example.sampleapp.core.designsystem.theme.Gray
 import com.example.sampleapp.core.designsystem.theme.KnightsTheme
-import com.example.sampleapp.feature.sample.appbar.AppBarSample
-import com.example.sampleapp.feature.sample.nav.BottomNavBar
-import com.example.sampleapp.feature.sample.services.SampleWebsocketService
-import com.example.sampleapp.feature.sample.slider.SliderSample
-import com.example.sampleapp.feature.sample.slider.StepsSliderSample
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -55,25 +50,7 @@ import kotlin.random.Random
 
 @AndroidEntryPoint
 class SampleActivity : AppCompatActivity() {
-    protected var mService: SampleWebsocketService? = null
-    private var mBound: Boolean = false
 
-    private val mConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            Log.i("SampleActivity", "onServiceConnected")
-            val binder: SampleWebsocketService.WebSocketsBinder = service as SampleWebsocketService.WebSocketsBinder
-            mService = binder.service
-            mBound = true
-
-        }
-
-        override fun onServiceDisconnected(name: ComponentName) {
-            Log.i("SampleActivity", "onServiceDisconnected")
-            mService = null
-            mBound = false
-
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -98,48 +75,10 @@ class SampleActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val intent = Intent(this, SampleWebsocketService::class.java)
-        bindService(intent, mConnection, BIND_AUTO_CREATE)
-
     }
 
     override fun onStop() {
         super.onStop()
-        unbindService(mConnection)
-        mBound = false
-
-    }
-
-    private val workList = mutableListOf<Thread>()
-    private val timer = Timer()
-
-    private fun hotStreamTest() {
-        for (index in 0..4) {
-            val target = Thread {
-                runBlocking(Dispatchers.Default) {
-                    EventObserver.eventSubscriber.collect {
-                        Log.d("SampleActivity", "threadId = $index, id = ${it.id}, data = ${it.data}")
-                    }
-                }
-            }
-
-            workList.add(target)
-            target.start()
-        }
-
-        Log.d("SampleActivity", "workList size = ${workList.size}")
-
-        val task = object : TimerTask() {
-            override fun run() {
-                CoroutineScope(Dispatchers.Default).launch {
-                    val id = Random.nextInt(0, 999)
-                    Log.d("SampleActivity", "send event id = ${id}")
-                    EventObserver.eventPublisher.tryEmit(EventObserver.Event(id.toString(), Bundle()))
-                }
-            }
-        }
-
-        timer.schedule(task, 0, 10000)
     }
 }
 
@@ -154,18 +93,12 @@ internal fun SampleScreen(
     Column(
         modifier = modifier.navigationBarsPadding(),
     ) {
-        AppBarSample(title = "테스트") {
-            Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
-        }
         Spacer(Modifier.requiredHeight(spaceHeight))
         PrimaryButton()
         CloseButton()
         Spacer(Modifier.requiredHeight(spaceHeight))
-        SliderSample()
         Spacer(Modifier.requiredHeight(spaceHeight))
-        StepsSliderSample()
         Spacer(Modifier.requiredHeight(spaceHeight))
-        BottomNavBar()
     }
 }
 
