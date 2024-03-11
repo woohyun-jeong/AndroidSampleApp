@@ -3,158 +3,206 @@ package com.example.sampleapp.core.designsystem.theme
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.sampleapp.core.designsystem.R
 
 private val SansSerifStyle = TextStyle(
     fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.Normal,
 )
 
+private val RobotoFamily = FontFamily(
+    Font(R.font.roboto_black, FontWeight.Black),
+    Font(R.font.roboto_black_italic, FontWeight.Black, FontStyle.Italic),
+    Font(R.font.roboto_bold, FontWeight.Bold),
+    Font(R.font.roboto_bold_italic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.roboto_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.roboto_light, FontWeight.Light),
+    Font(R.font.roboto_light_italic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.roboto_medium, FontWeight.Medium),
+    Font(R.font.roboto_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.roboto_regular, FontWeight.Normal),
+    Font(R.font.roboto_thin, FontWeight.Thin),
+    Font(R.font.roboto_thin_italic, FontWeight.Thin, FontStyle.Italic),
+)
+private val RobotoStyle = TextStyle(
+    fontFamily = RobotoFamily,
+    fontWeight = FontWeight.Normal,
+)
+
+private val MontserratFamily = FontFamily(
+    Font(R.font.montserrat_black, FontWeight.Black),
+    Font(R.font.montserrat_black_italic, FontWeight.Black, FontStyle.Italic),
+    Font(R.font.montserrat_bold, FontWeight.Bold),
+    Font(R.font.montserrat_bold_italic, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.montserrat_extra_bold, FontWeight.ExtraBold),
+    Font(R.font.montserrat_extra_bold_italic, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.montserrat_extra_light, FontWeight.ExtraLight),
+    Font(R.font.montserrat_extra_light_italic, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.montserrat_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_light, FontWeight.Light),
+    Font(R.font.montserrat_light_italic, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.montserrat_medium, FontWeight.Medium),
+    Font(R.font.montserrat_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.montserrat_semi_bold, FontWeight.SemiBold),
+    Font(R.font.montserrat_semi_bold_italic, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.montserrat_thin, FontWeight.Thin),
+    Font(R.font.montserrat_thin_italic, FontWeight.Thin, FontStyle.Italic),
+)
+
+private val Montserrat = TextStyle(
+    fontFamily = MontserratFamily,
+    fontWeight = FontWeight.Normal,
+)
+
 internal val Typography = KnightsTypography(
-    displayLargeR = SansSerifStyle.copy(
+    displayLargeR = Montserrat.copy(
         fontSize = 57.sp,
         lineHeight = 64.sp,
         letterSpacing = (-0.25).sp,
     ),
-    displayMediumR = SansSerifStyle.copy(
+    displayMediumR = Montserrat.copy(
         fontSize = 45.sp,
         lineHeight = 52.sp,
     ),
-    displaySmallR = SansSerifStyle.copy(
+    displaySmallR = Montserrat.copy(
         fontSize = 36.sp,
         lineHeight = 44.sp,
     ),
-    headlineLargeEB = SansSerifStyle.copy(
+    headlineLargeEB = Montserrat.copy(
         fontSize = 32.sp,
         lineHeight = 40.sp,
         fontWeight = FontWeight.ExtraBold,
     ),
-    headlineLargeSB = SansSerifStyle.copy(
+    headlineLargeSB = Montserrat.copy(
         fontSize = 32.sp,
         lineHeight = 40.sp,
         fontWeight = FontWeight.SemiBold,
     ),
-    headlineLargeR = SansSerifStyle.copy(
+    headlineLargeR = Montserrat.copy(
         fontSize = 32.sp,
         lineHeight = 40.sp,
     ),
-    headlineMediumB = SansSerifStyle.copy(
+    headlineMediumB = Montserrat.copy(
         fontSize = 28.sp,
         lineHeight = 36.sp,
         fontWeight = FontWeight.Bold,
     ),
-    headlineMediumM = SansSerifStyle.copy(
+    headlineMediumM = Montserrat.copy(
         fontSize = 28.sp,
         lineHeight = 36.sp,
         fontWeight = FontWeight.Medium,
     ),
-    headlineMediumR = SansSerifStyle.copy(
+    headlineMediumR = Montserrat.copy(
         fontSize = 28.sp,
         lineHeight = 36.sp,
     ),
-    headlineSmallBL = SansSerifStyle.copy(
+    headlineSmallBL = Montserrat.copy(
         fontSize = 24.sp,
         lineHeight = 32.sp,
         fontWeight = FontWeight.Black,
         letterSpacing = (-0.2).sp,
     ),
-    headlineSmallM = SansSerifStyle.copy(
+    headlineSmallM = Montserrat.copy(
         fontSize = 24.sp,
         lineHeight = 32.sp,
         fontWeight = FontWeight.Medium,
     ),
-    headlineSmallR = SansSerifStyle.copy(
+    headlineSmallR = Montserrat.copy(
         fontSize = 24.sp,
         lineHeight = 32.sp,
     ),
-    titleLargeBL = SansSerifStyle.copy(
+    titleLargeBL = Montserrat.copy(
         fontSize = 22.sp,
         lineHeight = 28.sp,
         fontWeight = FontWeight.Black,
     ),
-    titleLargeB = SansSerifStyle.copy(
+    titleLargeB = Montserrat.copy(
         fontSize = 22.sp,
         lineHeight = 28.sp,
         fontWeight = FontWeight.Bold,
     ),
-    titleLargeM = SansSerifStyle.copy(
+    titleLargeM = Montserrat.copy(
         fontSize = 22.sp,
         lineHeight = 28.sp,
         fontWeight = FontWeight.Medium,
     ),
-    titleLargeR = SansSerifStyle.copy(
+    titleLargeR = Montserrat.copy(
         fontSize = 22.sp,
         lineHeight = 28.sp,
     ),
-    titleMediumBL = SansSerifStyle.copy(
+    titleMediumBL = Montserrat.copy(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.Black,
     ),
-    titleMediumB = SansSerifStyle.copy(
+    titleMediumB = Montserrat.copy(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         fontWeight = FontWeight.Bold,
     ),
-    titleMediumR = SansSerifStyle.copy(
+    titleMediumR = Montserrat.copy(
         fontSize = 16.sp,
         lineHeight = 24.sp,
     ),
-    titleSmallB = SansSerifStyle.copy(
+    titleSmallB = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Bold,
         letterSpacing = 0.25.sp,
     ),
-    titleSmallM = SansSerifStyle.copy(
+    titleSmallM = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = 20.sp,
         fontWeight = FontWeight.Medium,
         letterSpacing = 0.25.sp,
     ),
-    titleSmallM140 = SansSerifStyle.copy(
+    titleSmallM140 = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = (19.6).sp,
         fontWeight = FontWeight.Medium,
         letterSpacing = (-0.2).sp,
     ),
-    titleSmallR140 = SansSerifStyle.copy(
+    titleSmallR140 = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = (19.6).sp,
         letterSpacing = (-0.2).sp,
     ),
-    titleSmallR = SansSerifStyle.copy(
+    titleSmallR = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = 20.sp,
     ),
-    labelLargeM = SansSerifStyle.copy(
+    labelLargeM = Montserrat.copy(
         fontSize = 12.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.Medium,
     ),
-    labelMediumR = SansSerifStyle.copy(
+    labelMediumR = Montserrat.copy(
         fontSize = 12.sp,
         lineHeight = 16.sp,
     ),
-    labelSmallM = SansSerifStyle.copy(
+    labelSmallM = Montserrat.copy(
         fontSize = 11.sp,
         lineHeight = 16.sp,
         fontWeight = FontWeight.Medium,
         letterSpacing = (-0.2).sp,
     ),
-    bodyLargeR = SansSerifStyle.copy(
+    bodyLargeR = Montserrat.copy(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
     ),
-    bodyMediumR = SansSerifStyle.copy(
+    bodyMediumR = Montserrat.copy(
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp,
     ),
-    bodySmallR = SansSerifStyle.copy(
+    bodySmallR = Montserrat.copy(
         fontSize = 12.sp,
         lineHeight = 16.sp,
     ),
@@ -162,6 +210,44 @@ internal val Typography = KnightsTypography(
 
 @Immutable
 data class KnightsTypography(
+    val displayLargeR: TextStyle,
+    val displayMediumR: TextStyle,
+    val displaySmallR: TextStyle,
+
+    val headlineLargeEB: TextStyle,
+    val headlineLargeSB: TextStyle,
+    val headlineLargeR: TextStyle,
+    val headlineMediumB: TextStyle,
+    val headlineMediumM: TextStyle,
+    val headlineMediumR: TextStyle,
+    val headlineSmallBL: TextStyle,
+    val headlineSmallM: TextStyle,
+    val headlineSmallR: TextStyle,
+
+    val titleLargeBL: TextStyle,
+    val titleLargeB: TextStyle,
+    val titleLargeM: TextStyle,
+    val titleLargeR: TextStyle,
+    val titleMediumBL: TextStyle,
+    val titleMediumB: TextStyle,
+    val titleMediumR: TextStyle,
+    val titleSmallB: TextStyle,
+    val titleSmallM: TextStyle,
+    val titleSmallM140: TextStyle,
+    val titleSmallR: TextStyle,
+    val titleSmallR140: TextStyle,
+
+    val labelLargeM: TextStyle,
+    val labelMediumR: TextStyle,
+    val labelSmallM: TextStyle,
+
+    val bodyLargeR: TextStyle,
+    val bodyMediumR: TextStyle,
+    val bodySmallR: TextStyle,
+)
+
+@Immutable
+data class TestTypography(
     val displayLargeR: TextStyle,
     val displayMediumR: TextStyle,
     val displaySmallR: TextStyle,
