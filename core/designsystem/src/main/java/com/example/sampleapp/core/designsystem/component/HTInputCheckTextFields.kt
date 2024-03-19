@@ -56,10 +56,22 @@ open class HTInputCheckTextFieldsView(
     protected val verification: Verification<out VerifyType>? = null
 ) : BaseComposeView {
 
+    /**
+     * 검증을 위한 interface
+     *
+     * @param type
+     */
     interface Verification<type : VerifyType> {
         fun verify(input: String): type
     }
 
+    /**
+     * HTInputCheckTextFieldsView에 Image를 위한 Data Class
+     *
+     * @property id
+     * @property size
+     * @property contentScale
+     */
     data class Image(
         @DrawableRes val id: Int,
         val size: Dp,
