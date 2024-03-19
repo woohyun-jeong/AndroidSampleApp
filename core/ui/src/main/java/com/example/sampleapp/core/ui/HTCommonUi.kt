@@ -11,16 +11,6 @@ import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsV
 import com.example.sampleapp.core.designsystem.component.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
-/**
- * Composable
- * 단점
- * - Composable이 Common Module로 빠져서 기능을 추가하려면 Common Module 쪽에서 코드 추가 필요
- * - fun 형태라서 상속도 불가능함
- * 장점
- *
- * - Compose라서 style 같은 경우 LocalContentColor provides contentColor 이와 같이 스타일 바뀌는 느낌으로 가능
- *
- */
 @Composable
 fun HTInputCheckTextFields() {
     val image = HTInputCheckTextFieldsView.Image(
