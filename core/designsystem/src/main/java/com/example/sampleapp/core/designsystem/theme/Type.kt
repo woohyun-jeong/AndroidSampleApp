@@ -55,7 +55,7 @@ private val MontserratFamily = FontFamily(
     Font(R.font.montserrat_thin_italic, FontWeight.Thin, FontStyle.Italic),
 )
 
-private val Montserrat = TextStyle(
+val Montserrat = TextStyle(
     fontFamily = MontserratFamily,
     fontWeight = FontWeight.Normal,
 )

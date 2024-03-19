@@ -20,7 +20,6 @@ import coil.request.SuccessResult
 import com.example.sampleapp.core.data.event.EventObserver
 import com.example.sampleapp.core.data.websocket.WebSocketMangerImp
 import com.example.sampleapp.core.model.Shopping
-import com.example.sampleapp.feature.sample.broadcast.ConnectivityWatcher
 import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.migration.CustomInjection
 import kotlinx.coroutines.CoroutineScope
