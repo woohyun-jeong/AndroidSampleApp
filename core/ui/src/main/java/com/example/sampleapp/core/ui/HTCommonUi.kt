@@ -3,6 +3,7 @@ package com.example.sampleapp.core.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sampleapp.core.designsystem.component.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.component.DefaultVerifyTypeVersion2
@@ -11,6 +12,7 @@ import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsV
 import com.example.sampleapp.core.designsystem.component.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
+@Preview
 @Composable
 fun HTInputCheckTextFields() {
     val image = HTInputCheckTextFieldsView.Image(
@@ -39,6 +41,7 @@ fun HTInputCheckTextFields() {
     view.OnDraw()
 }
 
+@Preview
 @Composable
 fun HTInputCheckTextFields2() {
     val image = HTInputCheckTextFieldsView.Image(
