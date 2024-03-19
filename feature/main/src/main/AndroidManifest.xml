@@ -11,11 +11,10 @@
             android:configChanges="uiMode"
             android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--&lt;!&ndash;&ndash;&gt;-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -35,20 +34,16 @@
             android:exported="true"
             android:configChanges="uiMode"
             android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 
         <service android:name=".services.ClosingService"
             android:enabled="true"
             android:stopWithTask="false" />
-
-        <service android:name="com.example.sampleapp.feature.sample.services.SampleWebsocketService"
-            android:enabled="true"
-            android:stopWithTask="false"/>
     </application>
 
 </manifest>

@@ -52,6 +52,8 @@ import com.example.sampleapp.core.designsystem.theme.LocalDarkTheme
 import com.example.sampleapp.core.designsystem.theme.Neon01
 import com.example.sampleapp.core.designsystem.theme.Neon05
 import com.example.sampleapp.core.model.Shopping
+import com.example.sampleapp.core.ui.HTInputCheckTextFields
+import com.example.sampleapp.core.ui.HTInputCheckTextFields2
 import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +78,10 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ShoppingScreen()
+                    Column {
+                        HTInputCheckTextFields()
+                        HTInputCheckTextFields2()
+                    }
                 }
             }
         }
