@@ -23,7 +23,7 @@ class HTInputCheckTextFieldsView3Test {
         assertFalse(isMaxLength)
     }
 
-    @DisplayName("HTInputCheckTextFieldsView MaxLength 테스트")
+    @DisplayName("HTInputCheckTextFieldsView Verification 테스트")
     @Test
     fun testHTInputCheckTextFieldsView2() {
         val view = HTInputCheckTextFieldsView(
