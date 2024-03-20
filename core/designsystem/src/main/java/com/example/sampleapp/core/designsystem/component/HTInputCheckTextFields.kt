@@ -50,9 +50,9 @@ sealed class DefaultVerifyTypeVersion2 : VerifyType {
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTInputCheckTextFieldsView(
-    protected val image: Image,
+    protected val image: Image? = null,
     protected val textStyle: TextStyle? = null,
-    protected val maxLength: Int,
+    protected val maxLength: Int = 0,
     protected val verification: Verification<out VerifyType>? = null
 ) : BaseComposeView {
 
@@ -61,8 +61,12 @@ open class HTInputCheckTextFieldsView(
      *
      * @param type
      */
+
+
     interface Verification<type : VerifyType> {
         fun verify(input: String): type
+
+        class VerificationTypeError(msg: String) : Throwable(msg)
     }
 
     /**
@@ -80,8 +84,16 @@ open class HTInputCheckTextFieldsView(
 
     @Composable
     override fun OnDraw() {
-        Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
             var textRemember by remember { mutableStateOf("") }
+
+            if (image == null) {
+                throw BaseComposeView.ComposeViewError("Image", Throwable("HTInputCheckTextFields Image is null"))
+            }
 
             Image(
                 painterResource(id = image.id),
@@ -91,37 +103,53 @@ open class HTInputCheckTextFieldsView(
                     .size(image.size),
                 contentScale = image.contentScale
             )
+
             TextField(
                 value = textRemember,
                 onValueChange = { text ->
-                    if (text.length <= maxLength) {
-                        textRemember = text
-                    } else {
+                    //최대
+                    if (!checkMaxLength(text)) {
                         return@TextField
                     }
 
-                    //검증 기능
-                    val result = verification?.verify(text) ?: return@TextField
-                    when (result) {
-                        is DefaultVerifyType.VerifyMaxInputTextError -> {
-                            Log.d("HTInputCheckTextFields", "verify() DefaultVerifyType.VerifyMaxInputTextError")
-                        }
-                        is DefaultVerifyType.VerifyAlreadyExistTextError -> {
-                            Log.d("HTInputCheckTextFields", "verify() DefaultVerifyType.VerifyAlreadyExistTextError")
-                        }
-                        is DefaultVerifyType.VerifyTextVerifyError -> {
-                            Log.d("HTInputCheckTextFields", "verify() DefaultVerifyType.VerifyTextVerifyError")
-                        }
-                        is DefaultVerifyType.VerifyOk -> {
-                            Log.d("HTInputCheckTextFields", "verify() DefaultVerifyType.VerifyOk")
-                        }
-                        else -> throw NullPointerException("HTInputCheckTextFields verify() Result Type is else!")
-                    }
+                    textRemember = text
+                    executeVerification(text)
                 },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
                 textStyle = textStyle ?: LocalTextStyle.current.copy(textAlign = TextAlign.End)
             )
+        }
+    }
+
+    fun checkMaxLength(text: String): Boolean {
+        return text.length <= maxLength
+    }
+
+    @Throws(NullPointerException::class)
+    fun executeVerification(text: String) {
+        //검증 기능
+        val result = verification?.verify(text) ?: throw BaseComposeView.ComposeViewError(
+            "Verification",
+            Throwable("HTInputCheckTextFields verification is null")
+        )
+
+        when (result) {
+            is DefaultVerifyType.VerifyMaxInputTextError -> {
+            }
+
+            is DefaultVerifyType.VerifyAlreadyExistTextError -> {
+            }
+
+            is DefaultVerifyType.VerifyTextVerifyError -> {
+            }
+
+            is DefaultVerifyType.VerifyOk -> {
+            }
+
+            else -> throw Verification.VerificationTypeError("HTInputCheckTextFields verify() Result Type is else!")
         }
     }
 
@@ -143,8 +171,16 @@ open class HTInputCheckTextFieldsView2(
 ) {
     @Composable
     override fun OnDraw() {
-        Row(Modifier.fillMaxWidth().wrapContentHeight()) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
             var textRemember by remember { mutableStateOf("") }
+
+            if (image == null) {
+                throw BaseComposeView.ComposeViewError("Image", Throwable("HTInputCheckTextFields Image is null"))
+            }
 
             Image(
                 painterResource(id = image.id),
@@ -154,6 +190,7 @@ open class HTInputCheckTextFieldsView2(
                     .size(image.size),
                 contentScale = image.contentScale
             )
+
             TextField(
                 value = textRemember,
                 onValueChange = { text ->
@@ -167,27 +204,63 @@ open class HTInputCheckTextFieldsView2(
                     val result = verification?.verify(text) ?: return@TextField
                     when (result) {
                         is DefaultVerifyType.VerifyMaxInputTextError -> {
-                            Log.d("HTInputCheckTextFields2", "verify() DefaultVerifyType.VerifyMaxInputTextError")
+                            Log.d(
+                                "HTInputCheckTextFields2",
+                                "verify() DefaultVerifyType.VerifyMaxInputTextError"
+                            )
                         }
+
                         is DefaultVerifyType.VerifyAlreadyExistTextError -> {
-                            Log.d("HTInputCheckTextFields2", "verify() DefaultVerifyType.VerifyAlreadyExistTextError")
+                            Log.d(
+                                "HTInputCheckTextFields2",
+                                "verify() DefaultVerifyType.VerifyAlreadyExistTextError"
+                            )
                         }
+
                         is DefaultVerifyType.VerifyTextVerifyError -> {
-                            Log.d("HTInputCheckTextFields2", "verify() DefaultVerifyType.VerifyTextVerifyError")
+                            Log.d(
+                                "HTInputCheckTextFields2",
+                                "verify() DefaultVerifyType.VerifyTextVerifyError"
+                            )
                         }
+
                         is DefaultVerifyType.VerifyOk -> {
                             Log.d("HTInputCheckTextFields2", "verify() DefaultVerifyType.VerifyOk")
                         }
+
                         is DefaultVerifyTypeVersion2.VerifyOk2 -> {
-                            Log.d("HTInputCheckTextFields2", "verify() DefaultVerifyTypeVersion2.VerifyOk2")
+                            Log.d(
+                                "HTInputCheckTextFields2",
+                                "verify() DefaultVerifyTypeVersion2.VerifyOk2"
+                            )
                         }
+
                         else -> throw NullPointerException("HTInputCheckTextFields verify() Result Type is else!")
                     }
                 },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
                 textStyle = textStyle ?: LocalTextStyle.current.copy(textAlign = TextAlign.End)
             )
         }
     }
 }
+
+
+/**
+ * HTInputCheckTextFieldsView를 상속받고 VerifyType 추가한 HTInputCheckTextFieldsView3
+ * HTInputCheckTextFieldsView OnDraw 그대로 상속받음
+ */
+open class HTInputCheckTextFieldsView3(
+    image: Image,
+    textStyle: TextStyle? = null,
+    maxLength: Int,
+    verification: Verification<VerifyType>? = null
+) : HTInputCheckTextFieldsView(
+    image = image,
+    textStyle = textStyle,
+    maxLength = maxLength,
+    verification = verification
+)

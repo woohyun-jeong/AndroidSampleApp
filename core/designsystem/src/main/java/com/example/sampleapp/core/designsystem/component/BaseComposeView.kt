@@ -8,4 +8,16 @@ import androidx.compose.runtime.Composable
 interface BaseComposeView {
     @Composable
     fun OnDraw()
+
+    /**
+     * Compose View 구성 중 발생한 에러 통합
+     *
+     * @param tag : 구분자
+     * @param cause : Throwable 형태 에러 이유
+     */
+    class ComposeViewError(
+        tag: String,
+        cause: Throwable
+    ) : Throwable(tag, cause)
 }
+

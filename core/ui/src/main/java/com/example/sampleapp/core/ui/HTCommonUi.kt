@@ -9,6 +9,7 @@ import com.example.sampleapp.core.designsystem.component.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.component.DefaultVerifyTypeVersion2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView2
+import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView3
 import com.example.sampleapp.core.designsystem.component.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
@@ -26,7 +27,7 @@ fun HTInputCheckTextFields() {
     val view = HTInputCheckTextFieldsView(
         image = image,
         textStyle = textStyle,
-        maxLength = 20,
+        maxLength = 4,
         verification = object : HTInputCheckTextFieldsView.Verification<DefaultVerifyType> {
             override fun verify(input: String): DefaultVerifyType {
                 return when (input.length) {
@@ -71,3 +72,32 @@ fun HTInputCheckTextFields2() {
     view.OnDraw()
 }
 
+@Preview
+@Composable
+fun HTInputCheckTextFields3() {
+    val image = HTInputCheckTextFieldsView.Image(
+        id = R.drawable.ic_contributor_placeholder_lightmode,
+        size = 45.dp,
+        contentScale = ContentScale.Fit
+    )
+
+    val textStyle = LocalTypography.current.headlineLargeSB.copy(textAlign = TextAlign.End)
+
+    val view = HTInputCheckTextFieldsView3(
+        image = image,
+        textStyle = textStyle,
+        maxLength = 20,
+        verification = object : HTInputCheckTextFieldsView.Verification<VerifyType> {
+            override fun verify(input: String): VerifyType {
+                return when (input.length) {
+                    1 -> DefaultVerifyType.VerifyMaxInputTextError
+                    2 -> DefaultVerifyType.VerifyAlreadyExistTextError
+                    3 -> DefaultVerifyType.VerifyTextVerifyError
+                    4 -> DefaultVerifyTypeVersion2.VerifyOk2
+                    else -> DefaultVerifyType.VerifyOk
+                }
+            }
+        })
+
+    view.OnDraw()
+}
