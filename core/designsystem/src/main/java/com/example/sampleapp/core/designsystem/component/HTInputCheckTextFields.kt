@@ -107,12 +107,13 @@ open class HTInputCheckTextFieldsView(
             TextField(
                 value = textRemember,
                 onValueChange = { text ->
-                    //최대
+                    //최대 길이 체크
                     if (!checkMaxLength(text)) {
                         return@TextField
                     }
-
                     textRemember = text
+
+                    //Input Text 관련 검증 시작
                     executeVerification(text)
                 },
                 singleLine = true,
