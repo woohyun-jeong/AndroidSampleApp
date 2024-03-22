@@ -39,11 +39,14 @@ turbine = "1.0.0"
 coroutine = "1.7.2"
 
 androidxDatastore = "1.0.0"
+protobuf = "3.21.12"
+protobufPlugin = "0.9.0"
 
 ossLicenses = "17.0.1"
 ossLicensesPlugin = "0.10.6"
 junit = "1.1.5"
 material = "1.9.0"
+lifecycle-runtime-ktx = "2.7.0"
 
 [libraries]
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -114,9 +117,13 @@ verify-detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatt
 # plugin
 verify-detektPlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDatastore" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 oss-licenses-plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 
 [bundles]
 
@@ -128,3 +135,4 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 verify-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }

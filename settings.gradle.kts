@@ -27,5 +27,8 @@ include(
     ":core:datastore",
     ":feature:main",
     ":feature:pager",
-    ":feature:sample"
+    ":feature:sample",
+    ":feature:datastoretest",
+    ":feature:sample2",
+    ":feature:sample3"
 )

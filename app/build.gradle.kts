@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.immutable)
     implementation(projects.feature.main)
+    implementation(projects.feature.pager)
     implementation(projects.core.designsystem)
     implementation(project(mapOf("path" to ":feature:sample")))
 

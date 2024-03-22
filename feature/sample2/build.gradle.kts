@@ -3,21 +3,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sampleapp.feature.main"
+    namespace = "com.example.sampleapp.feature.sample2"
 }
 
 dependencies {
-    implementation(project(":feature:pager"))
-    implementation(project(":feature:sample"))
-    implementation(project(":feature:datastoretest"))
-    implementation(project(":feature:sample2"))
-    implementation(project(":feature:sample3"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.kotlinx.immutable)
-    implementation(files("./libs/library_module-release-1.0.8.aar"))
 }

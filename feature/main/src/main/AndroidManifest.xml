@@ -11,10 +11,10 @@
             android:configChanges="uiMode"
             android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <activity
@@ -27,6 +27,17 @@
 <!---->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
+        </activity>
+
+        <activity android:name="com.example.sampleapp.feature.datastoretest.DataStoreActivity"
+            android:exported="true"
+            android:configChanges="uiMode"
+            android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
         </activity>
 
         <activity
@@ -44,6 +55,31 @@
         <service android:name=".services.ClosingService"
             android:enabled="true"
             android:stopWithTask="false" />
+
+
+        <activity
+            android:name="com.example.sampleapp.feature.sample2.MainActivity"
+            android:exported="true"
+            android:configChanges="uiMode"
+            android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name="com.example.sampleapp.feature.sample3.MainActivity"
+            android:exported="true"
+            android:configChanges="uiMode"
+            android:theme="@style/Theme.DroidKnights2023.TransparentSystemBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
