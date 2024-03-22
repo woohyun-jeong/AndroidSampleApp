@@ -1,6 +1,6 @@
 [versions]
 androidGradlePlugin = "8.0.2"
-androidDesugarJdkLibs = "1.2.2"
+androidDesugarJdkLibs = "2.0.2"
 androidxCore = "1.9.0"
 androidxAppCompat = "1.6.1"
 androidxLifecycle = "2.6.1"
@@ -39,6 +39,7 @@ turbine = "1.0.0"
 coroutine = "1.7.2"
 
 androidxDatastore = "1.0.0"
+androidxDatastore2 = "1.0.0"
 protobuf = "3.21.12"
 protobufPlugin = "0.9.0"
 
@@ -124,6 +125,8 @@ junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-datastore-core = { group = "androidx.datastore", name = "datastore", version = "1.0.0" }
+datastore-core = { group = "androidx.datastore", name = "datastore-core", version = "1.0.0" }
 
 [bundles]
 

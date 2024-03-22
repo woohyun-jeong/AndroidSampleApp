@@ -32,5 +32,5 @@ dependencies {
     testImplementation(libs.junit4)
     testImplementation(libs.kotlin.test)
     implementation(libs.androidx.datastore)
-    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.datastore.core)
 }
