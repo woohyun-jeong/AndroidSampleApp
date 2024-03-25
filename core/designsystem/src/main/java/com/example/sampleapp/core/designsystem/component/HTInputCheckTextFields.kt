@@ -49,7 +49,7 @@ sealed class DefaultVerifyTypeVersion2 : VerifyType {
 /**
  * InputCheckTextFields 관련 Logic Interface
  */
-interface InputCheckTextFieldsLogic {
+interface InputCheckTextFieldsLogic : BaseLogic {
     fun checkMaxLength(text: String): Boolean
 
     fun executeVerification(text: String)

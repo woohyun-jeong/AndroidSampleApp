@@ -21,3 +21,7 @@ interface BaseComposeView {
     ) : Throwable(tag, cause)
 }
 
+/**
+ * Logic 관련 Interface
+ */
+interface BaseLogic
