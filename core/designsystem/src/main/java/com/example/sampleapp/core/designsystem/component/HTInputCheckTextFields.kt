@@ -47,6 +47,15 @@ sealed class DefaultVerifyTypeVersion2 : VerifyType {
 }
 
 /**
+ * InputCheckTextFields 관련 Logic Interface
+ */
+interface InputCheckTextFieldsLogic {
+    fun checkMaxLength(text: String): Boolean
+
+    fun executeVerification(text: String)
+}
+
+/**
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTInputCheckTextFieldsView(
@@ -54,15 +63,13 @@ open class HTInputCheckTextFieldsView(
     protected val textStyle: TextStyle? = null,
     protected val maxLength: Int = 0,
     protected val verification: Verification<out VerifyType>? = null
-) : BaseComposeView {
+) : BaseComposeView, InputCheckTextFieldsLogic {
 
     /**
      * 검증을 위한 interface
      *
      * @param type
      */
-
-
     interface Verification<type : VerifyType> {
         fun verify(input: String): type
 
@@ -92,7 +99,10 @@ open class HTInputCheckTextFieldsView(
             var textRemember by remember { mutableStateOf("") }
 
             if (image == null) {
-                throw BaseComposeView.ComposeViewError("Image", Throwable("HTInputCheckTextFields Image is null"))
+                throw BaseComposeView.ComposeViewError(
+                    "Image",
+                    Throwable("HTInputCheckTextFields Image is null")
+                )
             }
 
             Image(
@@ -125,12 +135,12 @@ open class HTInputCheckTextFieldsView(
         }
     }
 
-    fun checkMaxLength(text: String): Boolean {
+    override fun checkMaxLength(text: String): Boolean {
         return text.length <= maxLength
     }
 
     @Throws(NullPointerException::class)
-    fun executeVerification(text: String) {
+    override fun executeVerification(text: String) {
         //검증 기능
         val result = verification?.verify(text) ?: throw BaseComposeView.ComposeViewError(
             "Verification",
@@ -180,7 +190,10 @@ open class HTInputCheckTextFieldsView2(
             var textRemember by remember { mutableStateOf("") }
 
             if (image == null) {
-                throw BaseComposeView.ComposeViewError("Image", Throwable("HTInputCheckTextFields Image is null"))
+                throw BaseComposeView.ComposeViewError(
+                    "Image",
+                    Throwable("HTInputCheckTextFields Image is null")
+                )
             }
 
             Image(
