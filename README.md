@@ -8,6 +8,7 @@ This is a project to create an Android Sample app.
 </table><br/>
 
 ### Used Tech
+* [Multi Module](https://developer.android.com/topic/modularization/) - A Project with multiple Gradle modules is known as a multi-module project.
 * [Kotlin](https://kotlinlang.org/)
 * [MVVM](https://developer.android.com/jetpack/docs/guide)
 * [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - Asynchronous programming 
