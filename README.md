@@ -55,8 +55,8 @@ Using the above modularization strategy, the Android Sample app has the followin
    </td>
    <td>Brings everything together required for the app to function correctly. This includes UI scaffolding and navigation. 
    </td>
-   <td><code>NiaApp, MainActivity</code><br>
-   App-level controlled navigation via <code>NiaNavHost, NiaAppState, TopLevelDestination</code>
+   <td><code>SampleApplication, MainActivity</code><br>
+   App-level controlled navigation via <code>NavHost is Empty</code>
    </td>
   </tr>
   <tr>
