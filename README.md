@@ -32,14 +32,95 @@ This is a project to create an Android Sample app.
 * [Test](https://developer.android.com/training/testing/) - An Android testing framework for unit and runtime UI tests.
 * [ktlint](https://ktlint.github.io/) - Enforce Kotlin coding styles.
 
-
 ### Features
 * [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager) - Schedule deferrable, asynchronous tasks even if the app exits or device restarts.
 * [Room](https://developer.android.com/topic/libraries/architecture/room) - Access your app's SQLite database with in-app objects and compile-time checks.
 * [Glide](https://github.com/bumptech/glide) - Load and cache images by URL.
 * [Moshi](https://github.com/square/moshi) - Serialize Kotlin objects and deserialize JSON objects.
 
+### Modules
+Using the above modularization strategy, the Android Sample app has the following modules:
 
+<table>
+  <tr>
+   <td><strong>Name</strong>
+   </td>
+   <td><strong>Responsibilities</strong>
+   </td>
+   <td><strong>Key classes and good examples</strong>
+   </td>
+  </tr>
+  <tr>
+   <td><code>app</code>
+   </td>
+   <td>Brings everything together required for the app to function correctly. This includes UI scaffolding and navigation. 
+   </td>
+   <td><code>NiaApp, MainActivity</code><br>
+   App-level controlled navigation via <code>NiaNavHost, NiaAppState, TopLevelDestination</code>
+   </td>
+  </tr>
+  <tr>
+   <td><code>feature:1,</code><br>
+   <code>feature:2</code><br>
+   ...
+   </td>
+   <td>Functionality associated with a specific feature or user journey. Typically contains UI components and ViewModels which read data from other modules.<br>
+   Examples include:<br>
+   <ul>
+      <li><a href="https://github.com/woohyun-jeong/AndroidSampleApp/tree/main/feature/main"><code>feature:main</code></a>start main screen.</li>
+      <li><a href="https://github.com/woohyun-jeong/AndroidSampleApp/tree/main/feature/pager"><code>feature:pager</code></a>test pager screen.</li>
+      <li><a href="https://github.com/woohyun-jeong/AndroidSampleApp/tree/main/feature/sample"><code>feature:sample</code></a>test sample screen.</li>
+   </ul>
+   </td>
+   <td><code>MainActivity, MainViewModel</code><br>
+   <code>VerticalPagingActivity, PagingViewModel</code>
+   </td>
+  </tr>
+  <tr>
+   <td><code>core:designsystem</code>
+   </td>
+   <td>Design system which includes Core UI components (many of which are customized Material 3 components), app theme and icons. The design system can be viewed by running the <code>app-nia-catalog</code> run configuration. 
+   </td>
+   <td>
+   <code>BaseComposeView</code>    <code>BottomLogo</code>    <code>Chips</code> 
+   </td>
+  </tr>
+  <tr>
+   <td><code>core:ui</code>
+   </td>
+   <td>Composite UI components and resources used by feature modules, such as the news feed. Unlike the <code>designsystem</code> module, it is dependent on the data layer since it renders models, like news resources. 
+   </td>
+   <td> <code>NewsFeed</code> <code>NewsResourceCardExpanded</code>
+   </td>
+  </tr>
+  <tr>
+   <td><code>core:data</code>
+   </td>
+   <td>Making network requests and handling responses from a remote data source.
+   </td>
+   <td><code>ApiModule</code>
+   </td>
+  </tr>
+  <tr>
+   <td><code>core:datastore</code>
+   </td>
+   <td>Storing persistent data using DataStore.
+   </td>
+   <td><code>SessionPreferencesDataSource</code><br>
+   <code>SettingsPreferencesDataSource</code>
+   </td>
+  </tr>
+  <tr>
+   <td><code>core:model</code>
+   </td>
+   <td>Model classes used throughout the app.
+   </td>
+   <td><code>Topic</code><br>
+   <code>Shopping</code><br>
+   </td>
+  </tr>
+</table>
 
-## Test API
+### Test API
 - https://developers.naver.com/docs/serviceapi/search/movie/movie.md#%EC%98%81%ED%99%94
+
