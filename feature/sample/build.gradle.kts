@@ -12,5 +12,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
+    implementation(projects.core.designsystem)
     implementation(libs.kotlinx.immutable)
 }

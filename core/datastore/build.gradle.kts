@@ -31,6 +31,10 @@ protobuf {
 dependencies {
     testImplementation(libs.junit4)
     testImplementation(libs.kotlin.test)
+
     implementation(libs.androidx.datastore)
-    implementation(libs.datastore.core)
+    implementation(libs.androidx.datastore.core)
+    api(libs.androidx.datastore.core)
+    api(libs.protobuf.kotlin.lite)
+
 }

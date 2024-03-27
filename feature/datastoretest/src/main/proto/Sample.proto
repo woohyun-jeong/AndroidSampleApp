@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-option java_package = "com.example.sampleapp";
-option java_multiple_files = true;
-
-message Sample {
-  int32 counter = 1;
-}
