@@ -11,7 +11,7 @@ This is a project to create an Android Sample app.
 
 ### Used Tech
 * [Multi Module](https://developer.android.com/topic/modularization/) - A Project with multiple Gradle modules is known as a multi-module project.
-* [Kotlin](https://kotlinlang.org/)
+* [Kotlin](https://kotlinlang.org/) - This Project is using Kotlin version 1.8.21.
 * [MVVM](https://developer.android.com/jetpack/docs/guide)
 * [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - Asynchronous programming 
 * [Lifecycles](https://developer.android.com/topic/libraries/architecture/lifecycle) - Create a UI that automatically responds to lifecycle events.
