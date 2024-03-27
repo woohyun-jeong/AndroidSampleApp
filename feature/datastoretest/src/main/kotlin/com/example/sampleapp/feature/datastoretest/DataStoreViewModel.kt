@@ -1,6 +1,8 @@
 package com.example.sampleapp.feature.datastoretest
 
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,10 +24,13 @@ class DataStoreViewModel @Inject constructor(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     val uiSharedFlow = _uiSharedFlow.asSharedFlow()
-
-
     val testDataFlow = testDataStore.data
+    private val _isTest = mutableStateOf(false)
+    val isTest: State<Boolean> = _isTest
 
+    fun updateIsTest(isTest: Boolean) {
+        _isTest.value = isTest
+    }
     fun updateTest(isTest: Boolean) {
         viewModelScope.launch {
             testDataStore.updateData { testData ->
