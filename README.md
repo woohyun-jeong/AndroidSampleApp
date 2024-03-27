@@ -1,5 +1,6 @@
 ### AndroidSampleApp
 This is a project to create an Android Sample app.
+This is a sample project slightly changed from multi-module to lite.
 * DroidKnightsApp2023(https://github.com/droidknights/DroidKnightsApp/) - fork repository
 * nowinandroid(https://github.com/android/nowinandroid/tree/main) - reference repository
 
