@@ -47,6 +47,7 @@ class DataStoreActivity : BaseActivity() {
                 Log.d("DataStoreActivity", "initUiObserver isTest = ${it.isTest}")
                 viewModel.currentTestData = it
                 viewModel.updateIsTest(it.isTest)
+                viewModel.updateTestString("hi")
             }
         }
     }
@@ -76,6 +77,8 @@ class DataStoreActivity : BaseActivity() {
                     if (viewModel.currentTestData != null) {
                         val isTest = viewModel.currentTestData?.isTest ?: false
                         viewModel.updateTest(!isTest)
+                        viewModel.updateTestString("hello" + isTest.toString())
+
                     }
                 },
                 modifier = Modifier.wrapContentSize()

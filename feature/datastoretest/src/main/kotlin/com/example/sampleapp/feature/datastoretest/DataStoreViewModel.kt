@@ -41,6 +41,17 @@ class DataStoreViewModel @Inject constructor(
         }
     }
 
+    fun updateTestString(test: String) {
+        viewModelScope.launch {
+            testDataStore.updateData { testData ->
+                testData.toBuilder()
+                    .setTest(test)
+                    .build()
+            }
+        }
+    }
+
+
     var currentSettingData: SettingsData? = null
     var currentTestData: TestData? = null
 
