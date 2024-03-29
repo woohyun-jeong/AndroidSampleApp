@@ -36,5 +36,7 @@ dependencies {
     implementation(libs.androidx.datastore.core)
     api(libs.androidx.datastore.core)
     api(libs.protobuf.kotlin.lite)
+    api(libs.crypto.tink.android)
+    api(libs.protobuf.serialization)
 
 }
