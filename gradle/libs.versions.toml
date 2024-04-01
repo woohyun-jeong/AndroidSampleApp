@@ -11,6 +11,7 @@ androidxComposeMaterial3 = "1.1.0"
 androidxActivity = "1.7.2"
 hilt = "2.46.1"
 hiltNavigationCompose = "1.0.0"
+androidxCoreSplashscreen = "1.0.1"
 
 okhttp = "4.11.0"
 retrofit = "2.9.0"
@@ -71,6 +72,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxComposeNavigation" }
 androidx-compose-navigation-test = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidxComposeNavigation" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }

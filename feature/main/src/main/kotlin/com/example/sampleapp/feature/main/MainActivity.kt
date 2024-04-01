@@ -2,7 +2,6 @@ package com.example.sampleapp.feature.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +38,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.sampleapp.core.designsystem.component.BottomLogo
@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         viewModel.page = 1
 
@@ -94,30 +95,6 @@ class MainActivity : AppCompatActivity() {
         startService(Intent(this@MainActivity, ClosingService::class.java))
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(tag, "Activity onStart")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(tag, "Activity onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(tag, "Activity onPause")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(tag, "Activity onResume")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(tag, "Activity onDestroy")
-    }
 }
 
 @Composable
