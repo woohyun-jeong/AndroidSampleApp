@@ -2,7 +2,12 @@ package com.example.sampleapp.core.ui
 
 import HTSearchBarView
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,6 +21,7 @@ import com.example.sampleapp.core.designsystem.theme.LocalTypography
 fun HTSearchBar() {
     val inputTextStyle = LocalTypography.current.bodyMediumR.copy()
     val hintTextStyle = LocalTypography.current.bodyMediumR.copy(color = Color.LightGray)
+    val buttonTextStyle = LocalTypography.current.bodyLargeR.copy(color = Color.Black)
 
     val searchBarTextField = HTSearchBarView.SearchBarTextField(
         maxLength = 20,
@@ -31,10 +37,10 @@ fun HTSearchBar() {
     )
 
     val searchBarButton = HTSearchBarView.SearchBarButton(
-        textStyle = inputTextStyle,
+        textStyle = buttonTextStyle,
         buttonText = "취소",
         shape = null,
-        buttonListener = object : HTSearchBarView.SearchButtonListener{
+        buttonListener = object : HTSearchBarView.SearchButtonListener {
             override fun onClick(inputText: String) {
                 Log.d("HTSearchBar", "SearchButtonListener inputText = $inputText")
             }
@@ -42,6 +48,11 @@ fun HTSearchBar() {
     )
 
     val view = object : HTSearchBarView(
+        layoutModifier = Modifier
+            .background(Color.LightGray)
+            .fillMaxWidth()
+            .height(90.dp)
+            .padding(20.dp),
         searchTextField = searchBarTextField,
         searchBarButton = searchBarButton
     ) {
