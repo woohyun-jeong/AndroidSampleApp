@@ -49,6 +49,7 @@ interface HTSearchBarLogic : BaseLogic {
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTSearchBarView(
+    protected val layoutModifier: Modifier? = null,
     protected val searchTextField: SearchBarTextField,
     protected val searchBarButton: SearchBarButton
 ) : BaseComposeView, HTSearchBarLogic {
@@ -94,60 +95,72 @@ open class HTSearchBarView(
 
     @Composable
     override fun OnDraw() {
-        //TextField Remember 초기화
-        var textRemember by remember { mutableStateOf("") }
-
         //View 초기화
         Row(
-            modifier = Modifier
+            modifier = layoutModifier ?: Modifier
                 .fillMaxWidth()
                 .height(90.dp)
                 .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val textFieldModifier = searchTextField.modifier ?: Modifier
+                .weight(0.75f)
+                .fillMaxHeight()
 
-            TextField(
-                value = textRemember,
-                onValueChange = { text ->
-                    //최대 길이 체크
-                    if (!checkMaxLength(text)) {
-                        return@TextField
-                    }
-                    textRemember = text
+            val buttonModifier = searchBarButton.modifier ?: Modifier
+                .weight(0.2f)
+                .wrapContentHeight()
+                .padding(start = 20.dp)
 
-                    //Input Text 관련 검증 시작
-                    executeVerification(text)
-                },
-                placeholder = {
-                    val hint = searchTextField.inputHint ?: ""
-                    Text(text = hint, style = searchTextField.hintTextStyle ?: LocalTextStyle.current.copy())
-                },
-                singleLine = true,
-                modifier = searchTextField.modifier ?: Modifier
-                    .weight(0.75f)
-                    .fillMaxHeight(),
-                textStyle = searchTextField.inputTextStyle ?: LocalTextStyle.current.copy(),
-                shape = searchTextField.shape ?: RoundedCornerShape(9999.dp),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                )
+            TextFieldSearchBar(textFieldModifier, searchTextField)
+            ButtonSearchBar(buttonModifier, searchBarButton)
+        }
+    }
+
+    @Composable
+    protected fun TextFieldSearchBar(modifier: Modifier, searchTextField: SearchBarTextField){
+        //TextField Remember 초기화
+        var textRemember by remember { mutableStateOf("") }
+
+        TextField(
+            value = textRemember,
+            onValueChange = { text ->
+                //최대 길이 체크
+                if (!checkMaxLength(text)) {
+                    return@TextField
+                }
+                textRemember = text
+
+                //Input Text 관련 검증 시작
+                executeVerification(text)
+            },
+            placeholder = {
+                val hint = searchTextField.inputHint ?: ""
+                Text(text = hint, style = searchTextField.hintTextStyle ?: LocalTextStyle.current.copy())
+            },
+            singleLine = true,
+            modifier = modifier,
+            textStyle = searchTextField.inputTextStyle ?: LocalTextStyle.current.copy(),
+            shape = searchTextField.shape ?: RoundedCornerShape(9999.dp),
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
             )
+        )
+    }
 
-            TextButton(
-                onClick = searchBarButton.onClickButton,
-                shape = searchBarButton.shape ?: ButtonDefaults.textShape,
-                modifier = searchBarButton.modifier ?: Modifier
-                    .weight(0.25f)
-                    .fillMaxHeight()
-                    .padding(start = 20.dp)
-            ) {
-                Text(
-                    text = searchBarButton.buttonText ?: "",
-                    style = searchBarButton.textStyle
-                        ?: LocalTextStyle.current.copy(textAlign = TextAlign.Center)
-                )
-            }
+    @Composable
+    protected fun ButtonSearchBar(modifier: Modifier, searchBarButton: SearchBarButton){
+        TextButton(
+            onClick = searchBarButton.onClickButton,
+            shape = searchBarButton.shape ?: ButtonDefaults.textShape,
+            modifier = modifier
+        ) {
+            Text(
+                text = searchBarButton.buttonText ?: "",
+                style = searchBarButton.textStyle
+                    ?: LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+            )
         }
     }
 
