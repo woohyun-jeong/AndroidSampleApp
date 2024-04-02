@@ -19,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,6 +54,7 @@ open class HTSearchBarView(
     protected val searchTextField: SearchBarTextField,
     protected val searchBarButton: SearchBarButton
 ) : BaseComposeView, HTSearchBarLogic {
+    private var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
      * HTSearchBarView InputText 객체 관련 객체
@@ -83,7 +85,7 @@ open class HTSearchBarView(
      * @property textStyle
      * @property shape
      * @property modifier
-     * @property onClickButton
+     * @property buttonListener
      */
     @Immutable
     data class SearchBarButton(
@@ -91,8 +93,16 @@ open class HTSearchBarView(
         val textStyle: TextStyle? = null,
         val shape: Shape? = null,
         val modifier: Modifier? = null,
-        val onClickButton: () -> Unit
+        val buttonListener: SearchButtonListener
     )
+
+    /**
+     *
+     *
+     */
+    interface SearchButtonListener {
+        fun onClick(inputText: String)
+    }
 
     @Composable
     override fun OnDraw() {
@@ -119,9 +129,8 @@ open class HTSearchBarView(
     }
 
     @Composable
-    protected fun TextFieldSearchBar(modifier: Modifier, searchTextField: SearchBarTextField){
-        //TextField Remember 초기화
-        var textRemember by remember { mutableStateOf("") }
+    protected fun TextFieldSearchBar(modifier: Modifier, searchTextField: SearchBarTextField) {
+        var textRemember by remember { textMutableStateOf }
 
         TextField(
             value = textRemember,
@@ -137,7 +146,10 @@ open class HTSearchBarView(
             },
             placeholder = {
                 val hint = searchTextField.inputHint ?: ""
-                Text(text = hint, style = searchTextField.hintTextStyle ?: LocalTextStyle.current.copy())
+                Text(
+                    text = hint,
+                    style = searchTextField.hintTextStyle ?: LocalTextStyle.current.copy()
+                )
             },
             singleLine = true,
             modifier = modifier,
@@ -151,9 +163,11 @@ open class HTSearchBarView(
     }
 
     @Composable
-    protected fun ButtonSearchBar(modifier: Modifier, searchBarButton: SearchBarButton){
+    protected fun ButtonSearchBar(modifier: Modifier, searchBarButton: SearchBarButton) {
+        val textRemember by remember { textMutableStateOf }
+
         TextButton(
-            onClick = searchBarButton.onClickButton,
+            onClick = { searchBarButton.buttonListener.onClick(textRemember) },
             shape = searchBarButton.shape ?: ButtonDefaults.textShape,
             modifier = modifier
         ) {
@@ -172,10 +186,11 @@ open class HTSearchBarView(
     @Throws(NullPointerException::class)
     override fun executeVerification(text: String) {
         //검증 기능
-        val result = searchTextField.textVerification?.verify(text) ?: throw BaseComposeView.ComposeViewError(
-            "Verification",
-            Throwable("HTInputCheckTextFields verification is null")
-        )
+        val result = searchTextField.textVerification?.verify(text)
+            ?: throw BaseComposeView.ComposeViewError(
+                "Verification",
+                Throwable("HTInputCheckTextFields verification is null")
+            )
 
         when (result) {
             is DefaultVerifyType.VerifyMaxInputTextError -> {

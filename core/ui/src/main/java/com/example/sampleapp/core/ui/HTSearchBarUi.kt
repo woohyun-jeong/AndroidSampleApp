@@ -34,8 +34,10 @@ fun HTSearchBar() {
         textStyle = inputTextStyle,
         buttonText = "취소",
         shape = null,
-        onClickButton = {
-            Log.d("HTSearchBar", "onClickButton Event Start")
+        buttonListener = object : HTSearchBarView.SearchButtonListener{
+            override fun onClick(inputText: String) {
+                Log.d("HTSearchBar", "SearchButtonListener inputText = $inputText")
+            }
         }
     )
 
