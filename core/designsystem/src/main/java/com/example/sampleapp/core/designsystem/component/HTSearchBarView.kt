@@ -112,17 +112,16 @@ open class HTSearchBarView(
                 .fillMaxWidth()
                 .height(90.dp)
                 .padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             val textFieldModifier = searchTextField.modifier ?: Modifier
                 .weight(0.75f)
                 .fillMaxHeight()
 
             val buttonModifier = searchBarButton.modifier ?: Modifier
-                .weight(0.2f)
-                .wrapContentHeight()
+                .weight(0.25f)
+                .fillMaxHeight()
                 .padding(start = 20.dp)
-
             TextFieldSearchBar(textFieldModifier, searchTextField)
             ButtonSearchBar(buttonModifier, searchBarButton)
         }

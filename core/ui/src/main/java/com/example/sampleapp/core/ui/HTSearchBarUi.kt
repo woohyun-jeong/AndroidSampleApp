@@ -18,12 +18,15 @@ import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
 @Preview(widthDp = 360, heightDp = 100)
 @Composable
-fun HTSearchBar() {
+fun HTSearchBar(
+    textField: HTSearchBarView.SearchBarTextField? = null,
+    button: HTSearchBarView.SearchBarButton? = null
+) {
     val inputTextStyle = LocalTypography.current.bodyMediumR.copy()
     val hintTextStyle = LocalTypography.current.bodyMediumR.copy(color = Color.LightGray)
     val buttonTextStyle = LocalTypography.current.bodyLargeR.copy(color = Color.Black)
 
-    val searchBarTextField = HTSearchBarView.SearchBarTextField(
+    val searchBarTextField = textField ?: HTSearchBarView.SearchBarTextField(
         maxLength = 20,
         inputHint = "검색어 입력해주세요.",
         inputTextStyle = inputTextStyle,
@@ -36,7 +39,7 @@ fun HTSearchBar() {
         }
     )
 
-    val searchBarButton = HTSearchBarView.SearchBarButton(
+    val searchBarButton = button ?: HTSearchBarView.SearchBarButton(
         textStyle = buttonTextStyle,
         buttonText = "취소",
         shape = null,
