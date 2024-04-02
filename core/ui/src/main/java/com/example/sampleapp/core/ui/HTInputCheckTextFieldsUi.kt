@@ -10,6 +10,7 @@ import com.example.sampleapp.core.designsystem.component.DefaultVerifyTypeVersio
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView3
+import com.example.sampleapp.core.designsystem.component.Verification
 import com.example.sampleapp.core.designsystem.component.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
@@ -28,7 +29,7 @@ fun HTInputCheckTextFields() {
         image = image,
         textStyle = textStyle,
         maxLength = 4,
-        verification = object : HTInputCheckTextFieldsView.Verification<DefaultVerifyType> {
+        verification = object : Verification<DefaultVerifyType> {
             override fun verify(input: String): DefaultVerifyType {
                 return when (input.length) {
                     1 -> DefaultVerifyType.VerifyMaxInputTextError
@@ -57,7 +58,7 @@ fun HTInputCheckTextFields2() {
         image = image,
         textStyle = textStyle,
         maxLength = 20,
-        verification = object : HTInputCheckTextFieldsView.Verification<VerifyType> {
+        verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
                 return when (input.length) {
                     1 -> DefaultVerifyType.VerifyMaxInputTextError
@@ -87,7 +88,7 @@ fun HTInputCheckTextFields3() {
         image = image,
         textStyle = textStyle,
         maxLength = 20,
-        verification = object : HTInputCheckTextFieldsView.Verification<VerifyType> {
+        verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
                 return when (input.length) {
                     1 -> DefaultVerifyType.VerifyMaxInputTextError

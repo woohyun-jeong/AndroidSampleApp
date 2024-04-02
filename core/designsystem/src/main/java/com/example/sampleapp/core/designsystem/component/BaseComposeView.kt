@@ -1,6 +1,8 @@
 package com.example.sampleapp.core.designsystem.component
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.Dp
 
 /**
  * Compose 그리기 관련 Interface

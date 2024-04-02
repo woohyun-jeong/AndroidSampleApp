@@ -55,6 +55,7 @@ import com.example.sampleapp.core.model.Shopping
 import com.example.sampleapp.core.ui.HTInputCheckTextFields
 import com.example.sampleapp.core.ui.HTInputCheckTextFields2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields3
+import com.example.sampleapp.core.ui.HTSearchBar
 import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Column {
-                        HTInputCheckTextFields()
+                        HTSearchBar()
                         HTInputCheckTextFields2()
                         HTInputCheckTextFields3()
                     }

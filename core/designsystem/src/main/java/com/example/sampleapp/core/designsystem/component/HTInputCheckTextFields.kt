@@ -24,20 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * 유연한 상속을 위해서 interface를 사용함
- */
-interface VerifyType
 
-/**
- * 첫 번째 테스트 Verify Type
- */
-sealed class DefaultVerifyType : VerifyType {
-    object VerifyMaxInputTextError : DefaultVerifyType()
-    object VerifyAlreadyExistTextError : DefaultVerifyType()
-    object VerifyTextVerifyError : DefaultVerifyType()
-    object VerifyOk : DefaultVerifyType()
-}
 
 /**
  * 두 번째 테스트 Verify Type
@@ -64,17 +51,6 @@ open class HTInputCheckTextFieldsView(
     protected val maxLength: Int = 0,
     protected val verification: Verification<out VerifyType>? = null
 ) : BaseComposeView, InputCheckTextFieldsLogic {
-
-    /**
-     * 검증을 위한 interface
-     *
-     * @param type
-     */
-    interface Verification<type : VerifyType> {
-        fun verify(input: String): type
-
-        class VerificationTypeError(msg: String) : Throwable(msg)
-    }
 
     /**
      * HTInputCheckTextFieldsView에 Image를 위한 Data Class
