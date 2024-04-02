@@ -65,6 +65,7 @@ open class HTSearchBarView(
      * @property modifier
      * @property textVerification
      */
+    @Immutable
     data class SearchBarTextField(
         val maxLength: Int = 0,
         val inputHint: String? = null,
