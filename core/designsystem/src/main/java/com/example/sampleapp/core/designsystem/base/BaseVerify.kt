@@ -1,4 +1,4 @@
-package com.example.sampleapp.core.designsystem.component
+package com.example.sampleapp.core.designsystem.base
 
 /**
  * 유연한 상속을 위해서 interface를 사용함

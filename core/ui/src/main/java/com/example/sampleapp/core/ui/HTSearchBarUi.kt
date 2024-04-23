@@ -1,5 +1,6 @@
 package com.example.sampleapp.core.ui
 
+import HTSearchBarStyle
 import HTSearchBarView
 import android.util.Log
 import androidx.compose.foundation.background
@@ -11,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sampleapp.core.designsystem.component.DefaultVerifyType
-import com.example.sampleapp.core.designsystem.component.Verification
-import com.example.sampleapp.core.designsystem.component.VerifyType
+import com.example.sampleapp.core.designsystem.base.BaseComposeView
+import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
+import com.example.sampleapp.core.designsystem.base.Verification
+import com.example.sampleapp.core.designsystem.base.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
 @Preview(widthDp = 360, heightDp = 100)
@@ -29,8 +31,6 @@ fun HTSearchBar(
     val searchBarTextField = textField ?: HTSearchBarView.SearchBarTextField(
         maxLength = 20,
         inputHint = "검색어 입력해주세요.",
-        inputTextStyle = inputTextStyle,
-        hintTextStyle = hintTextStyle,
         textVerification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
                 Log.d("HTSearchBar", "onInputTextChange inputText = $input")
@@ -40,9 +40,7 @@ fun HTSearchBar(
     )
 
     val searchBarButton = button ?: HTSearchBarView.SearchBarButton(
-        textStyle = buttonTextStyle,
         buttonText = "취소",
-        shape = null,
         buttonListener = object : HTSearchBarView.SearchButtonListener {
             override fun onClick(inputText: String) {
                 Log.d("HTSearchBar", "SearchButtonListener inputText = $inputText")
@@ -57,7 +55,16 @@ fun HTSearchBar(
             .height(90.dp)
             .padding(20.dp),
         searchTextField = searchBarTextField,
-        searchBarButton = searchBarButton
+        searchBarButton = searchBarButton,
+        style = object :BaseComposeView.ComposeViewStyle<HTSearchBarStyle>{
+            override fun defineStyleType(): HTSearchBarStyle {
+                return HTSearchBarStyle(
+                    inputTextStyle = inputTextStyle,
+                    inputHintTextStyle = hintTextStyle,
+                    buttonTextStyle = buttonTextStyle
+                )
+            }
+        }
     ) {
 
     }

@@ -5,13 +5,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sampleapp.core.designsystem.component.DefaultVerifyType
+import com.example.sampleapp.core.designsystem.base.BaseComposeView
+import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.component.DefaultVerifyTypeVersion2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView3
-import com.example.sampleapp.core.designsystem.component.Verification
-import com.example.sampleapp.core.designsystem.component.VerifyType
+import com.example.sampleapp.core.designsystem.base.Verification
+import com.example.sampleapp.core.designsystem.base.VerifyType
+import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsStyle
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
 
 @Preview
@@ -27,7 +29,11 @@ fun HTInputCheckTextFields() {
 
     val view = HTInputCheckTextFieldsView(
         image = image,
-        textStyle = textStyle,
+        style = object :BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle>{
+            override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+                return HTInputCheckTextFieldsStyle(textStyle)
+            }
+        },
         maxLength = 4,
         verification = object : Verification<DefaultVerifyType> {
             override fun verify(input: String): DefaultVerifyType {
@@ -56,7 +62,7 @@ fun HTInputCheckTextFields2() {
 
     val view = HTInputCheckTextFieldsView2(
         image = image,
-        textStyle = textStyle,
+        style = HTInputCheckTextFieldsStyle(textStyle),
         maxLength = 20,
         verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
@@ -86,7 +92,11 @@ fun HTInputCheckTextFields3() {
 
     val view = HTInputCheckTextFieldsView3(
         image = image,
-        textStyle = textStyle,
+        style = object :BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle>{
+            override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+                return HTInputCheckTextFieldsStyle(textStyle)
+            }
+        },
         maxLength = 20,
         verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {

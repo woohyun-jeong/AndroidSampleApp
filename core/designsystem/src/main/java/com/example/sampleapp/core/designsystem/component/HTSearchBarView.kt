@@ -1,16 +1,9 @@
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -31,11 +24,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.sampleapp.core.designsystem.component.BaseComposeView
-import com.example.sampleapp.core.designsystem.component.BaseLogic
-import com.example.sampleapp.core.designsystem.component.DefaultVerifyType
-import com.example.sampleapp.core.designsystem.component.Verification
-import com.example.sampleapp.core.designsystem.component.VerifyType
+import com.example.sampleapp.core.designsystem.base.BaseComposeView
+import com.example.sampleapp.core.designsystem.base.BaseLogic
+import com.example.sampleapp.core.designsystem.base.BaseStyle
+import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
+import com.example.sampleapp.core.designsystem.base.Verification
+import com.example.sampleapp.core.designsystem.base.VerifyType
 
 /**
  * InputCheckTextFields 관련 Logic Interface
@@ -47,13 +41,35 @@ interface HTSearchBarLogic : BaseLogic {
 }
 
 /**
+ * 기본 HTSearchBarStyle
+ *
+ * @property inputModifier
+ * @property inputTextStyle
+ * @property inputHintTextStyle
+ * @property inputShape
+ * @property buttonModifier
+ * @property buttonTextStyle
+ * @property buttonShape
+ */
+data class HTSearchBarStyle(
+    var inputModifier: Modifier? = null,
+    val inputTextStyle: TextStyle? = null,
+    val inputHintTextStyle: TextStyle? = null,
+    val inputShape: Shape? = null,
+    var buttonModifier: Modifier? = null,
+    val buttonTextStyle: TextStyle? = null,
+    val buttonShape: Shape? = null,
+) : BaseStyle
+
+/**
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTSearchBarView(
     protected val layoutModifier: Modifier? = null,
     protected val searchTextField: SearchBarTextField,
-    protected val searchBarButton: SearchBarButton
-) : BaseComposeView, HTSearchBarLogic {
+    protected val searchBarButton: SearchBarButton,
+    protected val style: BaseComposeView.ComposeViewStyle<out HTSearchBarStyle>? = null
+) : BaseComposeView {
     private var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
@@ -61,20 +77,12 @@ open class HTSearchBarView(
      *
      * @property maxLength
      * @property inputHint
-     * @property inputTextStyle
-     * @property hintTextStyle
-     * @property shape
-     * @property modifier
      * @property textVerification
      */
     @Immutable
     data class SearchBarTextField(
         val maxLength: Int = 0,
         val inputHint: String? = null,
-        val inputTextStyle: TextStyle? = null,
-        val hintTextStyle: TextStyle? = null,
-        val shape: Shape? = null,
-        val modifier: Modifier? = null,
         val textVerification: Verification<VerifyType>? = null
     )
 
@@ -82,17 +90,11 @@ open class HTSearchBarView(
      * HTSearchBarView Button 객체 관련 데이터 객체
      *
      * @property buttonText
-     * @property textStyle
-     * @property shape
-     * @property modifier
      * @property buttonListener
      */
     @Immutable
     data class SearchBarButton(
         val buttonText: String?,
-        val textStyle: TextStyle? = null,
-        val shape: Shape? = null,
-        val modifier: Modifier? = null,
         val buttonListener: SearchButtonListener
     )
 
@@ -114,97 +116,141 @@ open class HTSearchBarView(
                 .padding(20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val textFieldModifier = searchTextField.modifier ?: Modifier
+            val defaultInputModifier = Modifier
                 .weight(0.75f)
                 .fillMaxHeight()
 
-            val buttonModifier = searchBarButton.modifier ?: Modifier
+            val defaultButtonModifier = Modifier
                 .weight(0.25f)
                 .fillMaxHeight()
                 .padding(start = 20.dp)
-            TextFieldSearchBar(textFieldModifier, searchTextField)
-            ButtonSearchBar(buttonModifier, searchBarButton)
+
+            val targetStyle = style?.defineStyleType() ?: HTSearchBarStyle(
+                inputModifier = defaultInputModifier,
+                buttonModifier = defaultButtonModifier
+            )
+
+            when{
+                targetStyle.inputModifier == null -> targetStyle.inputModifier = defaultInputModifier
+                targetStyle.buttonModifier == null -> targetStyle.buttonModifier = defaultButtonModifier
+            }
+
+            TextFieldSearchBar(targetStyle, searchTextField, textMutableStateOf).OnDraw()
+            ButtonSearchBar(targetStyle, searchBarButton, textMutableStateOf).OnDraw()
         }
     }
 
-    @Composable
-    protected fun TextFieldSearchBar(modifier: Modifier, searchTextField: SearchBarTextField) {
-        var textRemember by remember { textMutableStateOf }
+    /**
+     * 기본 TextFieldSearchBar
+     *
+     * @property style
+     * @property searchTextField
+     * @property textMutableStateOf
+     */
+    class TextFieldSearchBar(
+        private val style: HTSearchBarStyle,
+        private val searchTextField: SearchBarTextField,
+        private val textMutableStateOf: MutableState<String>
+    ) : BaseComposeView, HTSearchBarLogic {
 
-        TextField(
-            value = textRemember,
-            onValueChange = { text ->
-                //최대 길이 체크
-                if (!checkMaxLength(text)) {
-                    return@TextField
-                }
-                textRemember = text
+        @Composable
+        override fun OnDraw() {
+            val modifier = style.inputModifier ?: return
+            var textRemember by remember { textMutableStateOf }
 
-                //Input Text 관련 검증 시작
-                executeVerification(text)
-            },
-            placeholder = {
-                val hint = searchTextField.inputHint ?: ""
-                Text(
-                    text = hint,
-                    style = searchTextField.hintTextStyle ?: LocalTextStyle.current.copy()
+            TextField(
+                value = textRemember,
+                onValueChange = { text ->
+                    //최대 길이 체크
+                    if (!checkMaxLength(text)) {
+                        return@TextField
+                    }
+                    textRemember = text
+
+                    //Input Text 관련 검증 시작
+                    executeVerification(text)
+                },
+                placeholder = {
+                    val hint = searchTextField.inputHint ?: ""
+                    Text(
+                        text = hint,
+                        style = style.inputHintTextStyle ?: LocalTextStyle.current.copy()
+                    )
+                },
+                singleLine = true,
+                modifier = modifier,
+                textStyle = style.inputTextStyle ?: LocalTextStyle.current.copy(),
+                shape = style.buttonShape ?: RoundedCornerShape(9999.dp),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 )
-            },
-            singleLine = true,
-            modifier = modifier,
-            textStyle = searchTextField.inputTextStyle ?: LocalTextStyle.current.copy(),
-            shape = searchTextField.shape ?: RoundedCornerShape(9999.dp),
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            )
-        )
-    }
-
-    @Composable
-    protected fun ButtonSearchBar(modifier: Modifier, searchBarButton: SearchBarButton) {
-        val textRemember by remember { textMutableStateOf }
-
-        TextButton(
-            onClick = { searchBarButton.buttonListener.onClick(textRemember) },
-            shape = searchBarButton.shape ?: ButtonDefaults.textShape,
-            modifier = modifier
-        ) {
-            Text(
-                text = searchBarButton.buttonText ?: "",
-                style = searchBarButton.textStyle
-                    ?: LocalTextStyle.current.copy(textAlign = TextAlign.Center)
             )
         }
-    }
 
-    override fun checkMaxLength(text: String): Boolean {
-        return text.length <= searchTextField.maxLength
-    }
-
-    @Throws(NullPointerException::class)
-    override fun executeVerification(text: String) {
-        //검증 기능
-        val result = searchTextField.textVerification?.verify(text)
-            ?: throw BaseComposeView.ComposeViewError(
-                "Verification",
-                Throwable("HTInputCheckTextFields verification is null")
-            )
-
-        when (result) {
-            is DefaultVerifyType.VerifyMaxInputTextError -> {
-            }
-
-            is DefaultVerifyType.VerifyAlreadyExistTextError -> {
-            }
-
-            is DefaultVerifyType.VerifyTextVerifyError -> {
-            }
-
-            is DefaultVerifyType.VerifyOk -> {
-            }
-
-            else -> throw Verification.VerificationTypeError("HTInputCheckTextFields verify() Result Type is else!")
+        override fun checkMaxLength(text: String): Boolean {
+            return text.length <= searchTextField.maxLength
         }
+
+        @Throws(NullPointerException::class)
+        override fun executeVerification(text: String) {
+            //검증 기능
+            val result = searchTextField.textVerification?.verify(text)
+                ?: throw BaseComposeView.ComposeViewError(
+                    "Verification",
+                    Throwable("HTInputCheckTextFields verification is null")
+                )
+
+            when (result) {
+                is DefaultVerifyType.VerifyMaxInputTextError -> {
+                }
+
+                is DefaultVerifyType.VerifyAlreadyExistTextError -> {
+                }
+
+                is DefaultVerifyType.VerifyTextVerifyError -> {
+                }
+
+                is DefaultVerifyType.VerifyOk -> {
+                }
+
+                else -> throw Verification.VerificationTypeError("HTInputCheckTextFields verify() Result Type is else!")
+            }
+        }
+
     }
+
+    /**
+     * 기본 ButtonSearchBar
+     *
+     * @property style
+     * @property searchBarButton
+     * @property textMutableStateOf
+     */
+    class ButtonSearchBar(
+        private val style: HTSearchBarStyle,
+        private val searchBarButton: SearchBarButton,
+        private val textMutableStateOf: MutableState<String>
+    ) : BaseComposeView {
+
+        @Composable
+        override fun OnDraw() {
+            val modifier = style.buttonModifier ?: return
+            val textRemember by remember { textMutableStateOf }
+
+            TextButton(
+                onClick = { searchBarButton.buttonListener.onClick(textRemember) },
+                shape = style.buttonShape ?: ButtonDefaults.textShape,
+                modifier = modifier
+            ) {
+                Text(
+                    text = searchBarButton.buttonText ?: "",
+                    style = style.buttonTextStyle
+                        ?: LocalTextStyle.current.copy(textAlign = TextAlign.Center)
+                )
+            }
+        }
+
+    }
+
 }

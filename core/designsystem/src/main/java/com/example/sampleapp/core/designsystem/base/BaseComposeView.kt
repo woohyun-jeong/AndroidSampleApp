@@ -1,8 +1,6 @@
-package com.example.sampleapp.core.designsystem.component
+package com.example.sampleapp.core.designsystem.base
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.Dp
 
 /**
  * Compose 그리기 관련 Interface
@@ -18,12 +16,24 @@ interface BaseComposeView {
      * @param cause : Throwable 형태 에러 이유
      */
     class ComposeViewError(
-        tag: String,
-        cause: Throwable
+        tag: String, cause: Throwable
     ) : Throwable(tag, cause)
+
+    /**
+     * 기본 Style 적용 및 상속 구현하기 위한 Interface
+     */
+    interface ComposeViewStyle<type : BaseStyle> {
+        fun defineStyleType(): type
+    }
 }
 
 /**
  * Logic 관련 Interface
  */
 interface BaseLogic
+
+
+/**
+ * Logic 관련 Interface
+ */
+interface BaseStyle
