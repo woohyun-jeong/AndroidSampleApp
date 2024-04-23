@@ -17,6 +17,14 @@ import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
 import com.example.sampleapp.core.designsystem.theme.LocalTypography
+import com.example.sampleapp.core.designsystem.theme.Typography
+
+
+private val style = HTSearchBarStyle(
+    inputTextStyle = Typography.bodyMediumR.copy(),
+    inputHintTextStyle = Typography.bodyMediumR.copy(color = Color.LightGray),
+    buttonTextStyle = Typography.bodyLargeR.copy(color = Color.Black)
+)
 
 @Preview(widthDp = 360, heightDp = 100)
 @Composable
@@ -24,10 +32,6 @@ fun HTSearchBar(
     textField: HTSearchBarView.SearchBarTextField? = null,
     button: HTSearchBarView.SearchBarButton? = null
 ) {
-    val inputTextStyle = LocalTypography.current.bodyMediumR.copy()
-    val hintTextStyle = LocalTypography.current.bodyMediumR.copy(color = Color.LightGray)
-    val buttonTextStyle = LocalTypography.current.bodyLargeR.copy(color = Color.Black)
-
     val searchBarTextField = textField ?: HTSearchBarView.SearchBarTextField(
         maxLength = 20,
         inputHint = "검색어 입력해주세요.",
@@ -58,11 +62,7 @@ fun HTSearchBar(
         searchBarButton = searchBarButton,
         style = object :BaseComposeView.ComposeViewStyle<HTSearchBarStyle>{
             override fun defineStyleType(): HTSearchBarStyle {
-                return HTSearchBarStyle(
-                    inputTextStyle = inputTextStyle,
-                    inputHintTextStyle = hintTextStyle,
-                    buttonTextStyle = buttonTextStyle
-                )
+                return style
             }
         }
     ) {

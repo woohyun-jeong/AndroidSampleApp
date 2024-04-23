@@ -7,31 +7,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
+import com.example.sampleapp.core.designsystem.base.Verification
+import com.example.sampleapp.core.designsystem.base.VerifyType
 import com.example.sampleapp.core.designsystem.component.DefaultVerifyTypeVersion2
+import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsStyle
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView3
-import com.example.sampleapp.core.designsystem.base.Verification
-import com.example.sampleapp.core.designsystem.base.VerifyType
-import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsStyle
-import com.example.sampleapp.core.designsystem.theme.LocalTypography
+import com.example.sampleapp.core.designsystem.theme.Typography
+
+private val style = HTInputCheckTextFieldsStyle(
+    image = HTInputCheckTextFieldsView.Image(
+        id = R.drawable.ic_contributor_placeholder_lightmode,
+        size = 45.dp,
+        contentScale = ContentScale.Fit
+    ),
+    textStyle = Typography.headlineLargeSB.copy(textAlign = TextAlign.End)
+)
 
 @Preview
 @Composable
 fun HTInputCheckTextFields() {
-    val image = HTInputCheckTextFieldsView.Image(
-        id = R.drawable.ic_contributor_placeholder_darkmode,
-        size = 45.dp,
-        contentScale = ContentScale.Fit
-    )
-
-    val textStyle = LocalTypography.current.headlineLargeSB.copy(textAlign = TextAlign.End)
-
     val view = HTInputCheckTextFieldsView(
-        image = image,
-        style = object :BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle>{
+        style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
             override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                return HTInputCheckTextFieldsStyle(textStyle)
+                return style
             }
         },
         maxLength = 4,
@@ -52,17 +52,8 @@ fun HTInputCheckTextFields() {
 @Preview
 @Composable
 fun HTInputCheckTextFields2() {
-    val image = HTInputCheckTextFieldsView.Image(
-        id = R.drawable.ic_contributor_placeholder_lightmode,
-        size = 45.dp,
-        contentScale = ContentScale.Fit
-    )
-
-    val textStyle = LocalTypography.current.headlineLargeSB.copy(textAlign = TextAlign.End)
-
     val view = HTInputCheckTextFieldsView2(
-        image = image,
-        style = HTInputCheckTextFieldsStyle(textStyle),
+        style = style,
         maxLength = 20,
         verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
@@ -82,19 +73,10 @@ fun HTInputCheckTextFields2() {
 @Preview
 @Composable
 fun HTInputCheckTextFields3() {
-    val image = HTInputCheckTextFieldsView.Image(
-        id = R.drawable.ic_contributor_placeholder_lightmode,
-        size = 45.dp,
-        contentScale = ContentScale.Fit
-    )
-
-    val textStyle = LocalTypography.current.headlineLargeSB.copy(textAlign = TextAlign.End)
-
     val view = HTInputCheckTextFieldsView3(
-        image = image,
-        style = object :BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle>{
+        style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
             override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                return HTInputCheckTextFieldsStyle(textStyle)
+                return style
             }
         },
         maxLength = 20,

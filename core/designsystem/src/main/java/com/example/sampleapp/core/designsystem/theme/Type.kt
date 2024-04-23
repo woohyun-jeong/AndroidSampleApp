@@ -60,7 +60,7 @@ val Montserrat = TextStyle(
     fontWeight = FontWeight.Normal,
 )
 
-internal val Typography = KnightsTypography(
+val Typography = KnightsTypography(
     displayLargeR = Montserrat.copy(
         fontSize = 57.sp,
         lineHeight = 64.sp,
