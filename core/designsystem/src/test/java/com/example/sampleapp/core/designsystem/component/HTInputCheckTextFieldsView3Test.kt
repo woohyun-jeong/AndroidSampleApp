@@ -1,8 +1,9 @@
 package com.example.sampleapp.core.designsystem.component
 
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import org.junit.Assert
+import com.example.sampleapp.core.designsystem.base.BaseComposeView
+import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
+import com.example.sampleapp.core.designsystem.base.Verification
+import com.example.sampleapp.core.designsystem.base.VerifyType
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -12,8 +13,11 @@ class HTInputCheckTextFieldsView3Test {
     @Test
     fun testHTInputCheckTextFieldsView1() {
         val view = HTInputCheckTextFieldsView(
-            image = null,
-            textStyle = null,
+            style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
+                override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+                    return HTInputCheckTextFieldsStyle()
+                }
+            },
             maxLength = 2,
             verification = null
         )
@@ -27,16 +31,20 @@ class HTInputCheckTextFieldsView3Test {
     @Test
     fun testHTInputCheckTextFieldsView2() {
         val view = HTInputCheckTextFieldsView(
-            image = null,
-            textStyle = null,
+            style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
+                override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+                    return HTInputCheckTextFieldsStyle()
+                }
+            },
             maxLength = 10,
-            verification = object : HTInputCheckTextFieldsView.Verification<VerifyType> {
+            verification = object : Verification<VerifyType> {
                 override fun verify(input: String): VerifyType {
-                    when(input.length){
+                    when (input.length) {
                         2 -> {
                             assertTrue(true)
                             println("testHTInputCheckTextFieldsView2 is success")
                         }
+
                         else -> fail()
                     }
 
