@@ -134,9 +134,7 @@ open class HTInputCheckTextFieldsView(
     @Throws(NullPointerException::class)
     override fun executeVerification(text: String) {
         //검증 기능
-        val result = verification?.verify(text) ?: throw BaseComposeView.ComposeViewError(
-            "Verification", Throwable("HTInputCheckTextFields verification is null")
-        )
+        val result = verification?.verify(text) ?: return
 
         when (result) {
             is DefaultVerifyType.VerifyMaxInputTextError -> {
