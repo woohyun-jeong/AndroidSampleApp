@@ -191,11 +191,7 @@ open class HTSearchBarView(
         @Throws(NullPointerException::class)
         override fun executeVerification(text: String) {
             //검증 기능
-            val result = searchTextField.textVerification?.verify(text)
-                ?: throw BaseComposeView.ComposeViewError(
-                    "Verification",
-                    Throwable("HTInputCheckTextFields verification is null")
-                )
+            val result = searchTextField.textVerification?.verify(text) ?: return
 
             when (result) {
                 is DefaultVerifyType.VerifyMaxInputTextError -> {
