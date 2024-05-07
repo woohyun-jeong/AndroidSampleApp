@@ -12,11 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
-import com.example.sampleapp.core.designsystem.theme.LocalTypography
 import com.example.sampleapp.core.designsystem.theme.Typography
 
 
@@ -59,14 +57,11 @@ fun HTSearchBar(
             .height(90.dp)
             .padding(20.dp),
         searchTextField = searchBarTextField,
-        searchBarButton = searchBarButton,
-        style = object :BaseComposeView.ComposeViewStyle<HTSearchBarStyle>{
-            override fun defineStyleType(): HTSearchBarStyle {
-                return style
-            }
-        }
+        searchBarButton = searchBarButton
     ) {
-
+        override fun defineStyleType(): HTSearchBarStyle {
+            return style
+        }
     }
 
     view.OnDraw()

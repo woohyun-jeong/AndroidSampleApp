@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     Column {
                         HTSearchBar()
+                        HTInputCheckTextFields()
                         HTInputCheckTextFields2()
                         HTInputCheckTextFields3()
                     }

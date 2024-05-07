@@ -67,9 +67,8 @@ data class HTSearchBarStyle(
 open class HTSearchBarView(
     protected val layoutModifier: Modifier? = null,
     protected val searchTextField: SearchBarTextField,
-    protected val searchBarButton: SearchBarButton,
-    protected val style: BaseComposeView.ComposeViewStyle<out HTSearchBarStyle>? = null
-) : BaseComposeView {
+    protected val searchBarButton: SearchBarButton
+) : BaseComposeView, BaseComposeView.ComposeViewStyle<HTSearchBarStyle> {
     private var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
@@ -125,12 +124,9 @@ open class HTSearchBarView(
                 .fillMaxHeight()
                 .padding(start = 20.dp)
 
-            val targetStyle = style?.defineStyleType() ?: HTSearchBarStyle(
-                inputModifier = defaultInputModifier,
-                buttonModifier = defaultButtonModifier
-            )
+            val targetStyle = defineStyleType()
 
-            when{
+            when {
                 targetStyle.inputModifier == null -> targetStyle.inputModifier = defaultInputModifier
                 targetStyle.buttonModifier == null -> targetStyle.buttonModifier = defaultButtonModifier
             }
@@ -251,6 +247,10 @@ open class HTSearchBarView(
             }
         }
 
+    }
+
+    override fun defineStyleType(): HTSearchBarStyle {
+        return HTSearchBarStyle()
     }
 
 }

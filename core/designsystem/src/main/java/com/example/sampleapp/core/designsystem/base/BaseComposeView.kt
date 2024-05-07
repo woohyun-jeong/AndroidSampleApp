@@ -23,6 +23,12 @@ interface BaseComposeView {
      * 기본 Style 적용 및 상속 구현하기 위한 Interface
      */
     interface ComposeViewStyle<type : BaseStyle> {
+
+        /**
+         * 사용할 Style Type 정의
+         *
+         * @return
+         */
         fun defineStyleType(): type
     }
 }

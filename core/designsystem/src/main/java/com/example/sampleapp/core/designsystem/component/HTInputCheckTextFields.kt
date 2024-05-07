@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -61,10 +63,11 @@ data class HTInputCheckTextFieldsStyle(
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTInputCheckTextFieldsView(
-    protected val style: BaseComposeView.ComposeViewStyle<out HTInputCheckTextFieldsStyle>? = null,
     protected val maxLength: Int = 0,
     protected val verification: Verification<out VerifyType>? = null
-) : BaseComposeView, InputCheckTextFieldsLogic {
+) : BaseComposeView,
+    InputCheckTextFieldsLogic,
+    BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
 
     /**
      * HTInputCheckTextFieldsView에 Image를 위한 Data Class
@@ -83,20 +86,21 @@ open class HTInputCheckTextFieldsView(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .padding(20.dp)
         ) {
             var textRemember by remember { mutableStateOf("") }
-            val image = style?.defineStyleType()?.image ?: throw BaseComposeView.ComposeViewError(
-                "Image", Throwable("HTInputCheckTextFields Image is null")
-            )
+            val image = defineStyleType().image
 
-            Image(
-                painterResource(id = image.id),
-                contentDescription = "",
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .size(image.size),
-                contentScale = image.contentScale
-            )
+            if(image != null){
+                Image(
+                    painterResource(id = image.id),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(image.size),
+                    contentScale = image.contentScale
+                )
+            }
 
             TextField(
                 value = textRemember,
@@ -113,8 +117,8 @@ open class HTInputCheckTextFieldsView(
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp),
-                textStyle = style.defineStyleType().textStyle ?: LocalTextStyle.current.copy(
+                    .padding(start = 20.dp),
+                textStyle = defineStyleType().textStyle ?: LocalTextStyle.current.copy(
                     textAlign = TextAlign.End
                 )
             )
@@ -149,21 +153,21 @@ open class HTInputCheckTextFieldsView(
         }
     }
 
+    override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+        return HTInputCheckTextFieldsStyle()
+    }
+
 }
 
 /**
  * 첫 번째 HTInputCheckTextFieldsView를 상속받고 VerifyType 추가한 HTInputCheckTextFieldsView2
  */
 open class HTInputCheckTextFieldsView2(
-    style: HTInputCheckTextFieldsStyle,
     maxLength: Int,
     verification: Verification<VerifyType>? = null
 ) : HTInputCheckTextFieldsView(
-    style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-        override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-            return style
-        }
-    }, maxLength = maxLength, verification = verification
+    maxLength = maxLength,
+    verification = verification
 ) {
     @Composable
     override fun OnDraw() {
@@ -173,18 +177,18 @@ open class HTInputCheckTextFieldsView2(
                 .wrapContentHeight()
         ) {
             var textRemember by remember { mutableStateOf("") }
-            val image = style?.defineStyleType()?.image ?: throw BaseComposeView.ComposeViewError(
-                    "Image", Throwable("HTInputCheckTextFields Image is null")
-                )
+            val image = defineStyleType().image
 
-            Image(
-                painterResource(id = image.id),
-                contentDescription = "",
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .size(image.size),
-                contentScale = image.contentScale
-            )
+            if (image != null){
+                Image(
+                    painterResource(id = image.id),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(image.size),
+                    contentScale = image.contentScale
+                )
+            }
 
             TextField(
                 value = textRemember,
@@ -237,7 +241,7 @@ open class HTInputCheckTextFieldsView2(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp),
-                textStyle = style.defineStyleType().textStyle ?: LocalTextStyle.current.copy(
+                textStyle = defineStyleType().textStyle ?: LocalTextStyle.current.copy(
                     textAlign = TextAlign.End
                 )
             )
@@ -251,9 +255,9 @@ open class HTInputCheckTextFieldsView2(
  * HTInputCheckTextFieldsView OnDraw 그대로 상속받음
  */
 open class HTInputCheckTextFieldsView3(
-    style: BaseComposeView.ComposeViewStyle<out HTInputCheckTextFieldsStyle>? = null,
     maxLength: Int,
     verification: Verification<VerifyType>? = null
 ) : HTInputCheckTextFieldsView(
-    style = style, maxLength = maxLength, verification = verification
+    maxLength = maxLength,
+    verification = verification
 )

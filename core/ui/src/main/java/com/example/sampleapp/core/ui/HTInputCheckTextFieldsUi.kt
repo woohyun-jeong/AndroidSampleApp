@@ -5,7 +5,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
@@ -28,12 +27,7 @@ private val style = HTInputCheckTextFieldsStyle(
 @Preview
 @Composable
 fun HTInputCheckTextFields() {
-    val view = HTInputCheckTextFieldsView(
-        style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-            override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                return style
-            }
-        },
+    val view = object : HTInputCheckTextFieldsView(
         maxLength = 4,
         verification = object : Verification<DefaultVerifyType> {
             override fun verify(input: String): DefaultVerifyType {
@@ -44,7 +38,11 @@ fun HTInputCheckTextFields() {
                     else -> DefaultVerifyType.VerifyOk
                 }
             }
-        })
+        }) {
+        override fun defineStyleType(): HTInputCheckTextFieldsStyle {
+            return style
+        }
+    }
 
     view.OnDraw()
 }
@@ -53,7 +51,6 @@ fun HTInputCheckTextFields() {
 @Composable
 fun HTInputCheckTextFields2() {
     val view = HTInputCheckTextFieldsView2(
-        style = style,
         maxLength = 20,
         verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
@@ -74,11 +71,6 @@ fun HTInputCheckTextFields2() {
 @Composable
 fun HTInputCheckTextFields3() {
     val view = HTInputCheckTextFieldsView3(
-        style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-            override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                return style
-            }
-        },
         maxLength = 20,
         verification = object : Verification<VerifyType> {
             override fun verify(input: String): VerifyType {
