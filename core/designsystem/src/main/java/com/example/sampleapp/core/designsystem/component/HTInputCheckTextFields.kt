@@ -91,7 +91,7 @@ open class HTInputCheckTextFieldsView(
             var textRemember by remember { mutableStateOf("") }
             val image = defineStyleType().image
 
-            if(image != null){
+            if (image != null) {
                 Image(
                     painterResource(id = image.id),
                     contentDescription = "",
@@ -101,6 +101,8 @@ open class HTInputCheckTextFieldsView(
                     contentScale = image.contentScale
                 )
             }
+
+            val startPadding = if (image != null) 20.dp else 0.dp
 
             TextField(
                 value = textRemember,
@@ -117,7 +119,7 @@ open class HTInputCheckTextFieldsView(
                 singleLine = true,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 20.dp),
+                    .padding(start = startPadding),
                 textStyle = defineStyleType().textStyle ?: LocalTextStyle.current.copy(
                     textAlign = TextAlign.End
                 )
@@ -179,7 +181,7 @@ open class HTInputCheckTextFieldsView2(
             var textRemember by remember { mutableStateOf("") }
             val image = defineStyleType().image
 
-            if (image != null){
+            if (image != null) {
                 Image(
                     painterResource(id = image.id),
                     contentDescription = "",
