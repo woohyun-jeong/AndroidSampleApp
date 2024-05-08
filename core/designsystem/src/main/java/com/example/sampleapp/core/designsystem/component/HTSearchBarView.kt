@@ -103,7 +103,7 @@ open class HTSearchBarView(
     protected val searchTextField: SearchBarTextField,
     protected val searchBarButton: SearchBarButton
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
-    private var textMutableStateOf: MutableState<String> = mutableStateOf("")
+    protected var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
      * HTSearchBarView InputText 객체 관련 객체
@@ -127,8 +127,7 @@ open class HTSearchBarView(
      */
     @Immutable
     data class SearchBarButton(
-        val buttonText: String?,
-        val buttonListener: SearchButtonListener
+        val buttonText: String?, val buttonListener: SearchButtonListener
     )
 
     /**
@@ -301,4 +300,64 @@ open class HTSearchBarView(
         return HTSearchBarStyle()
     }
 
+}
+
+
+/**
+ * 두 번째 테스트  HTInputCheckTextFieldsView 상속
+ */
+class HTSearchBarView2(
+    layoutModifier: Modifier? = null,
+    searchTextField: SearchBarTextField,
+    searchBarButton: SearchBarButton
+) : HTSearchBarView(layoutModifier, searchTextField, searchBarButton) {
+    @Composable
+    override fun OnDraw() {
+        //View 초기화
+        Row(
+            modifier = layoutModifier ?: Modifier
+                .fillMaxWidth()
+                .height(90.dp)
+                .padding(20.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val defaultInputModifier = Modifier
+                .weight(0.75f)
+                .fillMaxHeight()
+
+            val defaultButtonModifier = Modifier
+                .weight(0.25f)
+                .fillMaxHeight()
+                .padding(start = 20.dp)
+
+            val targetStyle = defineStyleType()
+
+            //TODO 추가된 스타일에 대해서 정의
+            targetStyle.addStyle
+
+            when {
+                targetStyle.inputModifier == null -> targetStyle.inputModifier =
+                    defaultInputModifier
+
+                targetStyle.buttonModifier == null -> targetStyle.buttonModifier =
+                    defaultButtonModifier
+            }
+
+            object : TextFieldSearchBar(searchTextField, textMutableStateOf) {
+                override fun defineStyleType(): HTSearchBarStyle {
+                    return targetStyle
+                }
+            }.OnDraw()
+
+            object : ButtonSearchBar(searchBarButton, textMutableStateOf) {
+                override fun defineStyleType(): HTSearchBarStyle {
+                    return targetStyle
+                }
+            }.OnDraw()
+        }
+    }
+
+    override fun defineStyleType(): HTSearchBarStyle2 {
+        return HTSearchBarStyle2("TEST")
+    }
 }
