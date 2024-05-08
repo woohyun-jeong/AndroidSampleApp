@@ -13,11 +13,6 @@ class HTInputCheckTextFieldsView3Test {
     @Test
     fun testHTInputCheckTextFieldsView1() {
         val view = HTInputCheckTextFieldsView(
-            style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-                override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                    return HTInputCheckTextFieldsStyle()
-                }
-            },
             maxLength = 2,
             verification = null
         )
@@ -31,11 +26,6 @@ class HTInputCheckTextFieldsView3Test {
     @Test
     fun testHTInputCheckTextFieldsView2() {
         val view = HTInputCheckTextFieldsView(
-            style = object : BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-                override fun defineStyleType(): HTInputCheckTextFieldsStyle {
-                    return HTInputCheckTextFieldsStyle()
-                }
-            },
             maxLength = 10,
             verification = object : Verification<VerifyType> {
                 override fun verify(input: String): VerifyType {

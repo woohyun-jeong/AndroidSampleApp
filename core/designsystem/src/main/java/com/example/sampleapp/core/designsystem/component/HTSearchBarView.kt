@@ -30,6 +30,7 @@ import com.example.sampleapp.core.designsystem.base.BaseStyle
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
+import java.net.HttpCookie
 
 /**
  * InputCheckTextFields 관련 Logic Interface
@@ -51,7 +52,7 @@ interface HTSearchBarLogic : BaseLogic {
  * @property buttonTextStyle
  * @property buttonShape
  */
-data class HTSearchBarStyle(
+open class HTSearchBarStyle(
     var inputModifier: Modifier? = null,
     val inputTextStyle: TextStyle? = null,
     val inputHintTextStyle: TextStyle? = null,
@@ -62,13 +63,43 @@ data class HTSearchBarStyle(
 ) : BaseStyle
 
 /**
+ * 기본 HTSearchBarStyle
+ *
+ * @property inputModifier
+ * @property inputTextStyle
+ * @property inputHintTextStyle
+ * @property inputShape
+ * @property buttonModifier
+ * @property buttonTextStyle
+ * @property buttonShape
+ */
+class HTSearchBarStyle2(
+    var test: String,
+    inputModifier: Modifier? = null,
+    inputTextStyle: TextStyle? = null,
+    inputHintTextStyle: TextStyle? = null,
+    inputShape: Shape? = null,
+    buttonModifier: Modifier? = null,
+    buttonTextStyle: TextStyle? = null,
+    buttonShape: Shape? = null,
+) : HTSearchBarStyle(
+    inputModifier,
+    inputTextStyle,
+    inputHintTextStyle,
+    inputShape,
+    buttonModifier,
+    buttonTextStyle,
+    buttonShape
+)
+
+/**
  * 첫 번째 테스트  HTInputCheckTextFieldsView
  */
 open class HTSearchBarView(
     protected val layoutModifier: Modifier? = null,
     protected val searchTextField: SearchBarTextField,
     protected val searchBarButton: SearchBarButton
-) : BaseComposeView, BaseComposeView.ComposeViewStyle<HTSearchBarStyle> {
+) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
     private var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
@@ -127,8 +158,11 @@ open class HTSearchBarView(
             val targetStyle = defineStyleType()
 
             when {
-                targetStyle.inputModifier == null -> targetStyle.inputModifier = defaultInputModifier
-                targetStyle.buttonModifier == null -> targetStyle.buttonModifier = defaultButtonModifier
+                targetStyle.inputModifier == null -> targetStyle.inputModifier =
+                    defaultInputModifier
+
+                targetStyle.buttonModifier == null -> targetStyle.buttonModifier =
+                    defaultButtonModifier
             }
 
             TextFieldSearchBar(targetStyle, searchTextField, textMutableStateOf).OnDraw()
