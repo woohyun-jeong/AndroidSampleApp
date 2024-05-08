@@ -120,9 +120,9 @@ open class EmptyItemSubTitle(subTitle: String) : BaseComposeView, BaseComposeVie
     override fun OnDraw() {
         Text(
             text = subTitle,
-            color = style.titleTextStyle?.color ?: Color.Black,
-            fontSize = style.titleTextStyle?.fontSize ?: 30.sp,
-            fontWeight = style.titleTextStyle?.fontWeight ?: FontWeight.Normal
+            color = style.subTitleTextStyle?.color ?: Color.Black,
+            fontSize = style.subTitleTextStyle?.fontSize ?: 30.sp,
+            fontWeight = style.subTitleTextStyle?.fontWeight ?: FontWeight.Normal
         )
     }
 
