@@ -56,6 +56,7 @@ import com.example.sampleapp.core.ui.HTInputCheckTextFields
 import com.example.sampleapp.core.ui.HTInputCheckTextFields2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields3
 import com.example.sampleapp.core.ui.HTSearchBar
+import com.example.sampleapp.core.ui.HTVerticalEmptyItemLists
 import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -85,6 +86,10 @@ class MainActivity : AppCompatActivity() {
                         HTInputCheckTextFields()
                         HTInputCheckTextFields2()
                         HTInputCheckTextFields3()
+                        HTVerticalEmptyItemLists {
+                            viewModel.page = it
+                            Log.d("HTVerticalLists1", it.toString())
+                        }
                     }
                 }
             }
