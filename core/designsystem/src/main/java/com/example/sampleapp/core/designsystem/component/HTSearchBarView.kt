@@ -165,8 +165,17 @@ open class HTSearchBarView(
                     defaultButtonModifier
             }
 
-            TextFieldSearchBar(targetStyle, searchTextField, textMutableStateOf).OnDraw()
-            ButtonSearchBar(targetStyle, searchBarButton, textMutableStateOf).OnDraw()
+            object : TextFieldSearchBar(searchTextField, textMutableStateOf) {
+                override fun defineStyleType(): HTSearchBarStyle {
+                    return targetStyle
+                }
+            }.OnDraw()
+
+            object : ButtonSearchBar(searchBarButton, textMutableStateOf) {
+                override fun defineStyleType(): HTSearchBarStyle {
+                    return targetStyle
+                }
+            }.OnDraw()
         }
     }
 
@@ -177,14 +186,14 @@ open class HTSearchBarView(
      * @property searchTextField
      * @property textMutableStateOf
      */
-    class TextFieldSearchBar(
-        private val style: HTSearchBarStyle,
+    open class TextFieldSearchBar(
         private val searchTextField: SearchBarTextField,
         private val textMutableStateOf: MutableState<String>
-    ) : BaseComposeView, HTSearchBarLogic {
+    ) : BaseComposeView, HTSearchBarLogic, BaseComposeView.ComposeViewStyle<BaseStyle> {
 
         @Composable
         override fun OnDraw() {
+            val style = defineStyleType()
             val modifier = style.inputModifier ?: return
             var textRemember by remember { textMutableStateOf }
 
@@ -244,6 +253,10 @@ open class HTSearchBarView(
             }
         }
 
+        override fun defineStyleType(): HTSearchBarStyle {
+            return HTSearchBarStyle()
+        }
+
     }
 
     /**
@@ -253,14 +266,14 @@ open class HTSearchBarView(
      * @property searchBarButton
      * @property textMutableStateOf
      */
-    class ButtonSearchBar(
-        private val style: HTSearchBarStyle,
+    open class ButtonSearchBar(
         private val searchBarButton: SearchBarButton,
         private val textMutableStateOf: MutableState<String>
-    ) : BaseComposeView {
+    ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
 
         @Composable
         override fun OnDraw() {
+            val style = defineStyleType()
             val modifier = style.buttonModifier ?: return
             val textRemember by remember { textMutableStateOf }
 
@@ -275,6 +288,10 @@ open class HTSearchBarView(
                         ?: LocalTextStyle.current.copy(textAlign = TextAlign.Center)
                 )
             }
+        }
+
+        override fun defineStyleType(): HTSearchBarStyle {
+            return HTSearchBarStyle()
         }
 
     }
