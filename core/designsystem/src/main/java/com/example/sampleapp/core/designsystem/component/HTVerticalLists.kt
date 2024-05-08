@@ -13,13 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
+import com.example.sampleapp.core.designsystem.base.BaseStyle
 import com.example.sampleapp.core.designsystem.base.VerifyType
 
 interface ListType
+
+open class HTVerticalListEmptyItemStyle(
+    val titleTextStyle: TextStyle? = null,
+    val subTitleTextStyle: TextStyle? = null
+) : BaseStyle
 
 /**
  * item Shape Type
@@ -71,19 +79,55 @@ fun EmptyItem(data: DefaultData, out : () -> Unit){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Text(
-            text = "${item.title}",
-            color = Color.Black,
-            fontSize = 50.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "${item.contents}",
-            color = Color.Black,
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Normal
-        )
+        object : EmptyItemTitle(item.title) {
+            override fun defineStyleType(): HTVerticalListEmptyItemStyle {
+                return super.defineStyleType()
+            }
+        }.OnDraw()
+        object : EmptyItemSubTitle(item.contents) {
+            override fun defineStyleType(): HTVerticalListEmptyItemStyle {
+                return super.defineStyleType()
+            }
+        }.OnDraw()
 
+    }
+
+}
+
+open class EmptyItemTitle(title: String) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
+    val title = title
+    val style = defineStyleType()
+    @Composable
+    override fun OnDraw() {
+        Text(
+            text = title,
+            color = style.titleTextStyle?.color ?: Color.Black,
+            fontSize = style.titleTextStyle?.fontSize ?: 50.sp,
+            fontWeight = style.titleTextStyle?.fontWeight ?: FontWeight.Bold
+        )
+    }
+
+    override fun defineStyleType(): HTVerticalListEmptyItemStyle {
+        return HTVerticalListEmptyItemStyle()
+    }
+
+}
+
+open class EmptyItemSubTitle(subTitle: String) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
+    val subTitle = subTitle
+    val style = defineStyleType()
+    @Composable
+    override fun OnDraw() {
+        Text(
+            text = subTitle,
+            color = style.titleTextStyle?.color ?: Color.Black,
+            fontSize = style.titleTextStyle?.fontSize ?: 30.sp,
+            fontWeight = style.titleTextStyle?.fontWeight ?: FontWeight.Normal
+        )
+    }
+
+    override fun defineStyleType(): HTVerticalListEmptyItemStyle {
+        return HTVerticalListEmptyItemStyle()
     }
 
 }
