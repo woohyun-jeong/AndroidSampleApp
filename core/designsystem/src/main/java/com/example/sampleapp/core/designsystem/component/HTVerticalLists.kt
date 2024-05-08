@@ -13,11 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sampleapp.core.data.dummy.model.DefaultData
+import com.example.sampleapp.core.data.dummy.model.EmptyItemData
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.BaseStyle
 import com.example.sampleapp.core.designsystem.base.VerifyType
@@ -44,25 +45,6 @@ sealed interface ListShapeType : ListType {
  */
 sealed class DefaultVerifyTypeVerticalList : VerifyType {
     object VerifyNoDataError : DefaultVerifyTypeVerticalList()
-}
-interface DefaultData
-data class EmptyItemData(
-    val id: Int,
-    val title: String,
-    val contents: String
-): DefaultData
-
-class TestSampleRepository {
-    fun getAllData(): List<EmptyItemData> {
-        return listOf(
-            EmptyItemData(0, "test11","hi test!!!"),
-            EmptyItemData(1,"test2","hello"),
-            EmptyItemData(2,"test3","good"),
-            EmptyItemData(3,"test4","best"),
-            EmptyItemData(4,"test5","Test is LazyColumn Item"),
-            EmptyItemData(5,"test6","hello world")
-        )
-    }
 }
 
 @Composable
@@ -163,26 +145,6 @@ open class HTVerticalLists(private val items: List<DefaultData>? = null,
     @Throws(NullPointerException::class)
     fun executeVerification(text: String) {
         //검증 기능
-//        val result = verification?.verify(text) ?: throw BaseComposeView.ComposeViewError(
-//            "Verification",
-//            Throwable("HTInputCheckTextFields verification is null")
-//        )
-
-//        when (result) {
-//            is DefaultVerifyType.VerifyMaxInputTextError -> {
-//            }
-//
-//            is DefaultVerifyType.VerifyAlreadyExistTextError -> {
-//            }
-//
-//            is DefaultVerifyType.VerifyTextVerifyError -> {
-//            }
-//
-//            is DefaultVerifyType.VerifyOk -> {
-//            }
-//
-//            else -> throw HTInputCheckTextFieldsView.Verification.VerificationTypeError("HTInputCheckTextFields verify() Result Type is else!")
-//        }
     }
 
 }
