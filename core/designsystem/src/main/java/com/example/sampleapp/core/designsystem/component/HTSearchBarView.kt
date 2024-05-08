@@ -30,7 +30,6 @@ import com.example.sampleapp.core.designsystem.base.BaseStyle
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
-import java.net.HttpCookie
 
 /**
  * InputCheckTextFields 관련 Logic Interface
@@ -63,18 +62,22 @@ open class HTSearchBarStyle(
 ) : BaseStyle
 
 /**
- * 기본 HTSearchBarStyle
+ * 기본 HTSearchBarStyle2
  *
- * @property inputModifier
- * @property inputTextStyle
- * @property inputHintTextStyle
- * @property inputShape
- * @property buttonModifier
- * @property buttonTextStyle
- * @property buttonShape
+ * @property addStyle
+ * @constructor
+ * HTSearchBarStyle 상속 데이터
+ *
+ * @param inputModifier
+ * @param inputTextStyle
+ * @param inputHintTextStyle
+ * @param inputShape
+ * @param buttonModifier
+ * @param buttonTextStyle
+ * @param buttonShape
  */
 class HTSearchBarStyle2(
-    var test: String,
+    var addStyle: String,
     inputModifier: Modifier? = null,
     inputTextStyle: TextStyle? = null,
     inputHintTextStyle: TextStyle? = null,
@@ -182,7 +185,6 @@ open class HTSearchBarView(
     /**
      * 기본 TextFieldSearchBar
      *
-     * @property style
      * @property searchTextField
      * @property textMutableStateOf
      */
@@ -262,7 +264,6 @@ open class HTSearchBarView(
     /**
      * 기본 ButtonSearchBar
      *
-     * @property style
      * @property searchBarButton
      * @property textMutableStateOf
      */

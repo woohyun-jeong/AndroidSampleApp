@@ -40,6 +40,6 @@ interface BaseLogic
 
 
 /**
- * Logic 관련 Interface
+ * Style 관련 Interface
  */
 interface BaseStyle
