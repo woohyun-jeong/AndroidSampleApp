@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                         HTInputCheckTextFields2()
                         HTInputCheckTextFields3()
                         HTVerticalEmptyItemLists {
-                            viewModel.page = it
+//                            viewModel.page = it
                             Log.d("HTVerticalLists1", it.toString())
                         }
                     }
