@@ -1,15 +1,12 @@
 package com.example.sampleapp.core.designsystem.component
 
 import android.util.Log
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -19,11 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.BaseLogic
@@ -31,6 +26,7 @@ import com.example.sampleapp.core.designsystem.base.BaseStyle
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
+import com.example.sampleapp.core.designsystem.data.Image
 
 
 /**
@@ -56,7 +52,7 @@ interface InputCheckTextFieldsLogic : BaseLogic {
  */
 data class HTInputCheckTextFieldsStyle(
     val textStyle: TextStyle? = null,
-    val image: HTInputCheckTextFieldsView.Image? = null
+    val image: Image? = null
 ) : BaseStyle
 
 /**
@@ -68,17 +64,6 @@ open class HTInputCheckTextFieldsView(
 ) : BaseComposeView,
     InputCheckTextFieldsLogic,
     BaseComposeView.ComposeViewStyle<HTInputCheckTextFieldsStyle> {
-
-    /**
-     * HTInputCheckTextFieldsView에 Image를 위한 Data Class
-     *
-     * @property id
-     * @property size
-     * @property contentScale
-     */
-    data class Image(
-        @DrawableRes val id: Int, val size: Dp, val contentScale: ContentScale
-    )
 
     @Composable
     override fun OnDraw() {

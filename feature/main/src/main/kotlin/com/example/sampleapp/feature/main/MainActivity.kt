@@ -52,11 +52,13 @@ import com.example.sampleapp.core.designsystem.theme.LocalDarkTheme
 import com.example.sampleapp.core.designsystem.theme.Neon01
 import com.example.sampleapp.core.designsystem.theme.Neon05
 import com.example.sampleapp.core.model.Shopping
+import com.example.sampleapp.core.ui.HTIconBadge
 import com.example.sampleapp.core.ui.HTInputCheckTextFields
 import com.example.sampleapp.core.ui.HTInputCheckTextFields2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields3
 import com.example.sampleapp.core.ui.HTSearchBar
 import com.example.sampleapp.core.ui.HTVerticalEmptyItemLists
+import com.example.sampleapp.core.ui.countMutableState
 import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -64,6 +66,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import java.util.Timer
+import kotlin.concurrent.timerTask
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -73,6 +78,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.page = 1
+
+        Timer().schedule(timerTask {
+            val randomCount = Random.nextInt(0, 200)
+            countMutableState.value = randomCount
+        }, 0, 1000)
 
         setContent {
             // A surface container using the 'background' color from the theme
@@ -84,8 +94,7 @@ class MainActivity : AppCompatActivity() {
                     Column {
                         HTSearchBar()
                         HTInputCheckTextFields()
-                        HTInputCheckTextFields2()
-                        HTInputCheckTextFields3()
+                        HTIconBadge()
                         HTVerticalEmptyItemLists {
 //                            viewModel.page = it
                             Log.d("HTVerticalLists1", it.toString())

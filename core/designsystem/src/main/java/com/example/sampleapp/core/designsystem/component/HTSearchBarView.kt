@@ -103,7 +103,7 @@ open class HTSearchBarView(
     protected val searchTextField: SearchBarTextField,
     protected val searchBarButton: SearchBarButton
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
-    protected var textMutableStateOf: MutableState<String> = mutableStateOf("")
+    var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
     /**
      * HTSearchBarView InputText 객체 관련 객체
@@ -167,13 +167,13 @@ open class HTSearchBarView(
                     defaultButtonModifier
             }
 
-            object : TextFieldSearchBar(searchTextField, textMutableStateOf) {
+            object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
                 override fun defineStyleType(): HTSearchBarStyle {
                     return targetStyle
                 }
             }.OnDraw()
 
-            object : ButtonSearchBar(searchBarButton, textMutableStateOf) {
+            object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
                 override fun defineStyleType(): HTSearchBarStyle {
                     return targetStyle
                 }
@@ -187,7 +187,7 @@ open class HTSearchBarView(
      * @property searchTextField
      * @property textMutableStateOf
      */
-    open class TextFieldSearchBar(
+    open class TextFieldSearchBarView(
         private val searchTextField: SearchBarTextField,
         private val textMutableStateOf: MutableState<String>
     ) : BaseComposeView, HTSearchBarLogic, BaseComposeView.ComposeViewStyle<BaseStyle> {
@@ -266,7 +266,7 @@ open class HTSearchBarView(
      * @property searchBarButton
      * @property textMutableStateOf
      */
-    open class ButtonSearchBar(
+    open class ButtonSearchBarView(
         private val searchBarButton: SearchBarButton,
         private val textMutableStateOf: MutableState<String>
     ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
@@ -343,13 +343,13 @@ class HTSearchBarView2(
                     defaultButtonModifier
             }
 
-            object : TextFieldSearchBar(searchTextField, textMutableStateOf) {
+            object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
                 override fun defineStyleType(): HTSearchBarStyle {
                     return targetStyle
                 }
             }.OnDraw()
 
-            object : ButtonSearchBar(searchBarButton, textMutableStateOf) {
+            object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
                 override fun defineStyleType(): HTSearchBarStyle {
                     return targetStyle
                 }

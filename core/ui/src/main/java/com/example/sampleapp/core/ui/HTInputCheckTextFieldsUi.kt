@@ -13,10 +13,11 @@ import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsS
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView2
 import com.example.sampleapp.core.designsystem.component.HTInputCheckTextFieldsView3
+import com.example.sampleapp.core.designsystem.data.Image
 import com.example.sampleapp.core.designsystem.theme.Typography
 
 private val style = HTInputCheckTextFieldsStyle(
-    image = HTInputCheckTextFieldsView.Image(
+    image = Image(
         id = R.drawable.ic_contributor_placeholder_lightmode,
         size = 45.dp,
         contentScale = ContentScale.Fit
