@@ -49,7 +49,7 @@ open class HTIconBadgeStyle(
 
 
 /**
- * TODO
+ * HTIconBadgeView
  *
  * @property layoutModifier
  * @property badge
@@ -60,8 +60,9 @@ open class HTIconBadgeView(
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
 
     /**
-     * TODO
+     * Badge
      *
+     * @property count
      * @property iconImage
      * @property iconBadgeLogic
      */
@@ -112,7 +113,7 @@ open class HTIconBadgeView(
     }
 
     /**
-     * TODO
+     * BadgeIconView
      *
      * @property badgeIconImage
      */
@@ -154,9 +155,9 @@ open class HTIconBadgeView(
     }
 
     /**
-     * TODO
+     * BadgeView
      *
-     * @property count
+     * @property badgeCount
      * @property logic
      */
     open class BadgeView(

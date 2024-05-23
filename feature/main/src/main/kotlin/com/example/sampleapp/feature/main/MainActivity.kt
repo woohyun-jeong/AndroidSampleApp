@@ -53,6 +53,7 @@ import com.example.sampleapp.core.designsystem.theme.Neon01
 import com.example.sampleapp.core.designsystem.theme.Neon05
 import com.example.sampleapp.core.model.Shopping
 import com.example.sampleapp.core.ui.HTIconBadge
+import com.example.sampleapp.core.ui.HTIconBadge2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields
 import com.example.sampleapp.core.ui.HTInputCheckTextFields2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields3
@@ -90,7 +91,10 @@ class MainActivity : AppCompatActivity() {
                     Column {
                         HTSearchBar()
                         HTInputCheckTextFields()
-                        HTIconBadge()
+                        Row {
+                            HTIconBadge()
+                            HTIconBadge2()
+                        }
                         HTVerticalEmptyItemLists {
 //                            viewModel.page = it
                             Log.d("HTVerticalLists1", it.toString())
