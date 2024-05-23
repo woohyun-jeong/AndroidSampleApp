@@ -78,10 +78,13 @@ fun HTIconBadge2() {
     val countRemember by countMutableState
 
     val style = HTIconBadgeStyle(
+        badgeModifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
         badgeShape = RectangleShape,
         badgeShapeColor = Color.Blue,
         badgeTextStyle = Typography.bodyMediumR.copy(),
-        badgeTextSize = (6.5).sp,
+        badgeTextSize = 10.sp,
         badgeContentAlignment = Alignment.BottomStart,
         iconModifier = Modifier
             .fillMaxSize()
@@ -99,7 +102,7 @@ fun HTIconBadge2() {
             count = countRemember,
             iconImage = Image(
                 R.drawable.img_cat_knight,
-                50.dp,
+                30.dp,
                 ContentScale.Crop
             )
         )
