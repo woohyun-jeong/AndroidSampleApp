@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.landscapist.bom)
     implementation(libs.landscapist.coil)
     implementation(libs.landscapist.placeholder)
+    implementation(project(":core:data"))
 
     testImplementation(libs.junit4)
     testImplementation(libs.kotlin.test)
