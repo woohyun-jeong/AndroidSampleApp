@@ -74,15 +74,11 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
     private val tag = "MainActivityTest"
     private val viewModel: MainViewModel by viewModels()
+    private var timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.page = 1
-
-        Timer().schedule(timerTask {
-            val randomCount = Random.nextInt(0, 200)
-            countMutableState.value = randomCount
-        }, 0, 1000)
 
         setContent {
             // A surface container using the 'background' color from the theme
@@ -123,11 +119,21 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         Log.d(tag, "Activity onPause")
+
+        //Badge Count 자동 변환 취소
+        timer.cancel()
     }
 
     override fun onResume() {
         super.onResume()
         Log.d(tag, "Activity onResume")
+
+        //Badge Count 자동 변환 코드
+        timer = Timer()
+        timer.schedule(timerTask {
+            val randomCount = Random.nextInt(0, 200)
+            countMutableState.value = randomCount
+        }, 0, 1000)
     }
 
     override fun onDestroy() {
