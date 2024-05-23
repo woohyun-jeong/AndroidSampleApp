@@ -72,7 +72,7 @@ fun HTIconBadge() {
 }
 
 
-@Preview(widthDp = 200, heightDp = 200)
+@Preview(widthDp = 90, heightDp = 90)
 @Composable
 fun HTIconBadge2() {
     val countRemember by countMutableState
@@ -80,11 +80,11 @@ fun HTIconBadge2() {
     val style = HTIconBadgeStyle(
         badgeModifier = Modifier
             .fillMaxSize()
-            .padding(10.dp),
+            .padding(4.dp),
         badgeShape = RectangleShape,
         badgeShapeColor = Color.Blue,
         badgeTextStyle = Typography.bodyMediumR.copy(),
-        badgeTextSize = 10.sp,
+        badgeTextSize = 9.sp,
         badgeContentAlignment = Alignment.BottomStart,
         iconModifier = Modifier
             .fillMaxSize()
