@@ -21,8 +21,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
@@ -55,8 +57,6 @@ import com.example.sampleapp.core.model.Shopping
 import com.example.sampleapp.core.ui.HTIconBadge
 import com.example.sampleapp.core.ui.HTIconBadge2
 import com.example.sampleapp.core.ui.HTInputCheckTextFields
-import com.example.sampleapp.core.ui.HTInputCheckTextFields2
-import com.example.sampleapp.core.ui.HTInputCheckTextFields3
 import com.example.sampleapp.core.ui.HTSearchBar
 import com.example.sampleapp.core.ui.HTVerticalEmptyItemLists
 import com.example.sampleapp.core.ui.countMutableState
@@ -82,13 +82,14 @@ class MainActivity : AppCompatActivity() {
         viewModel.page = 1
 
         setContent {
-            // A surface container using the 'background' color from the theme
+            val scrollState = rememberScrollState()
+
             KnightsTheme(true) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Column {
+                    Column(Modifier.fillMaxSize().verticalScroll(scrollState)) {
                         HTSearchBar()
                         HTInputCheckTextFields()
                         Row {
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         startAppCloseService()
     }
 
-    private fun startAppCloseService(){
+    private fun startAppCloseService() {
         startService(Intent(this@MainActivity, ClosingService::class.java))
     }
 
