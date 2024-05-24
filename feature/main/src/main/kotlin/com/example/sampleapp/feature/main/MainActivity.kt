@@ -56,10 +56,12 @@ import com.example.sampleapp.core.designsystem.theme.Neon05
 import com.example.sampleapp.core.model.Shopping
 import com.example.sampleapp.core.ui.HTIconBadge
 import com.example.sampleapp.core.ui.HTIconBadge2
+import com.example.sampleapp.core.ui.HTIndicatorBadge
 import com.example.sampleapp.core.ui.HTInputCheckTextFields
 import com.example.sampleapp.core.ui.HTSearchBar
 import com.example.sampleapp.core.ui.HTVerticalEmptyItemLists
 import com.example.sampleapp.core.ui.countMutableState
+import com.example.sampleapp.core.ui.currentPositionMutableState
 import com.example.sampleapp.feature.main.services.ClosingService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -96,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                             HTIconBadge()
                             HTIconBadge2()
                         }
+                        HTIndicatorBadge()
                         HTVerticalEmptyItemLists {
 //                            viewModel.page = it
                             Log.d("HTVerticalLists1", it.toString())
@@ -137,7 +140,9 @@ class MainActivity : AppCompatActivity() {
         timer = Timer()
         timer.schedule(timerTask {
             val randomCount = Random.nextInt(0, 200)
+            val randomCurrentPosition = Random.nextInt(0, 10)
             countMutableState.value = randomCount
+            currentPositionMutableState.value = randomCurrentPosition
         }, 0, 1000)
     }
 
