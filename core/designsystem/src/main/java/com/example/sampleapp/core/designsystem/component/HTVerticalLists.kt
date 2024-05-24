@@ -128,8 +128,6 @@ open class HTVerticalLists(private val items: List<BaseViewData>? = null,
     }
     @Composable
     override fun OnDraw() {
-        val nestedScrollInterop = rememberNestedScrollInteropConnection()
-
         LazyColumn(
             modifier = Modifier.height(400.dp),
             contentPadding =  PaddingValues(all = 12.dp),
