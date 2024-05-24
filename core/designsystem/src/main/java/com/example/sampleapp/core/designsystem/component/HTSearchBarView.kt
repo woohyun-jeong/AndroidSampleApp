@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.BaseLogic
 import com.example.sampleapp.core.designsystem.base.BaseStyle
+import com.example.sampleapp.core.designsystem.base.BaseViewData
 import com.example.sampleapp.core.designsystem.base.DefaultVerifyType
 import com.example.sampleapp.core.designsystem.base.Verification
 import com.example.sampleapp.core.designsystem.base.VerifyType
@@ -100,8 +101,8 @@ class HTSearchBarStyle2(
  */
 open class HTSearchBarView(
     protected val layoutModifier: Modifier? = null,
-    protected val searchTextField: SearchBarTextField,
-    protected val searchBarButton: SearchBarButton
+    protected val searchTextField: BaseViewData,
+    protected val searchBarButton: BaseViewData
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
     var textMutableStateOf: MutableState<String> = mutableStateOf("")
 
@@ -117,7 +118,7 @@ open class HTSearchBarView(
         val maxLength: Int = 0,
         val inputHint: String? = null,
         val textVerification: Verification<VerifyType>? = null
-    )
+    ) : BaseViewData
 
     /**
      * HTSearchBarView Button 객체 관련 데이터 객체
@@ -127,8 +128,9 @@ open class HTSearchBarView(
      */
     @Immutable
     data class SearchBarButton(
-        val buttonText: String?, val buttonListener: SearchButtonListener
-    )
+        val buttonText: String?,
+        val buttonListener: SearchButtonListener
+    ) : BaseViewData
 
     /**
      *
@@ -167,17 +169,37 @@ open class HTSearchBarView(
                     defaultButtonModifier
             }
 
-            object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
-                override fun defineStyleType(): HTSearchBarStyle {
-                    return targetStyle
+            //SearchBarTextField 그리기
+            when (searchTextField) {
+                is SearchBarTextField -> {
+                    object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
+                        override fun defineStyleType(): HTSearchBarStyle {
+                            return targetStyle
+                        }
+                    }.OnDraw()
                 }
-            }.OnDraw()
 
-            object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
-                override fun defineStyleType(): HTSearchBarStyle {
-                    return targetStyle
+                else -> throw BaseComposeView.ComposeViewError(
+                    this@HTSearchBarView.javaClass.simpleName,
+                    Error("searchTextField type not SearchBarTextField")
+                )
+            }
+
+            //SearchBarButton 그리기
+            when (searchBarButton) {
+                is SearchBarButton -> {
+                    object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
+                        override fun defineStyleType(): HTSearchBarStyle {
+                            return targetStyle
+                        }
+                    }.OnDraw()
                 }
-            }.OnDraw()
+
+                else -> throw BaseComposeView.ComposeViewError(
+                    this@HTSearchBarView.javaClass.simpleName,
+                    Error("searchBarButton type not SearchBarButton")
+                )
+            }
         }
     }
 
@@ -302,7 +324,6 @@ open class HTSearchBarView(
 
 }
 
-
 /**
  * 두 번째 테스트  HTInputCheckTextFieldsView 상속
  */
@@ -343,17 +364,37 @@ class HTSearchBarView2(
                     defaultButtonModifier
             }
 
-            object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
-                override fun defineStyleType(): HTSearchBarStyle {
-                    return targetStyle
+            //SearchBarTextField 그리기
+            when (searchTextField) {
+                is SearchBarTextField -> {
+                    object : TextFieldSearchBarView(searchTextField, textMutableStateOf) {
+                        override fun defineStyleType(): HTSearchBarStyle {
+                            return targetStyle
+                        }
+                    }.OnDraw()
                 }
-            }.OnDraw()
 
-            object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
-                override fun defineStyleType(): HTSearchBarStyle {
-                    return targetStyle
+                else -> throw BaseComposeView.ComposeViewError(
+                    this@HTSearchBarView2.javaClass.simpleName,
+                    Error("searchTextField type not SearchBarTextField")
+                )
+            }
+
+            //SearchBarButton 그리기
+            when (searchBarButton) {
+                is SearchBarButton -> {
+                    object : ButtonSearchBarView(searchBarButton, textMutableStateOf) {
+                        override fun defineStyleType(): HTSearchBarStyle {
+                            return targetStyle
+                        }
+                    }.OnDraw()
                 }
-            }.OnDraw()
+
+                else -> throw BaseComposeView.ComposeViewError(
+                    this@HTSearchBarView2.javaClass.simpleName,
+                    Error("searchBarButton type not SearchBarButton")
+                )
+            }
         }
     }
 

@@ -17,11 +17,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sampleapp.core.data.dummy.model.DefaultData
-import com.example.sampleapp.core.data.dummy.model.EmptyItemData
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.BaseStyle
+import com.example.sampleapp.core.designsystem.base.BaseViewData
 import com.example.sampleapp.core.designsystem.base.VerifyType
+import com.example.sampleapp.core.designsystem.data.EmptyItemData
 
 interface ListType
 
@@ -48,7 +48,7 @@ sealed class DefaultVerifyTypeVerticalList : VerifyType {
 }
 
 @Composable
-fun EmptyItem(data: DefaultData, out : () -> Unit){
+fun EmptyItem(data: BaseViewData, out : () -> Unit){
     val item = data as EmptyItemData
     Row(
         modifier = Modifier
@@ -114,7 +114,7 @@ open class EmptyItemSubTitle(subTitle: String) : BaseComposeView, BaseComposeVie
 
 }
 
-open class HTVerticalLists(private val items: List<DefaultData>? = null,
+open class HTVerticalLists(private val items: List<BaseViewData>? = null,
                            private val verification: Verification<VerifyType>? = null,
                            private val out : (page: Int) -> Unit): BaseComposeView {
     interface Verification<type : VerifyType> {

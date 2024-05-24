@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.example.sampleapp.core.designsystem.base.BaseComposeView
 import com.example.sampleapp.core.designsystem.base.BaseLogic
 import com.example.sampleapp.core.designsystem.base.BaseStyle
+import com.example.sampleapp.core.designsystem.base.BaseViewData
 import com.example.sampleapp.core.designsystem.data.Image
 
 /**
@@ -56,7 +57,7 @@ open class HTIconBadgeStyle(
  */
 open class HTIconBadgeView(
     protected val layoutModifier: Modifier? = null,
-    protected val badge: Badge? = null
+    protected val badge: BaseViewData
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
 
     /**
@@ -71,10 +72,17 @@ open class HTIconBadgeView(
         val count: Int = 0,
         val iconImage: Image? = null,
         val iconBadgeLogic: HTIconBadgeLogic? = null
-    )
+    ) : BaseViewData
 
     @Composable
     override fun OnDraw() {
+        val badge = kotlin.runCatching {
+            badge as Badge
+        }.getOrNull() ?: throw BaseComposeView.ComposeViewError(
+            this@HTIconBadgeView.javaClass.simpleName,
+            Error("searchBarButton type not SearchBarButton")
+        )
+
         val defaultLayoutModifier = Modifier
             .size(90.dp)
             .padding(20.dp)
@@ -89,7 +97,7 @@ open class HTIconBadgeView(
 
             //BadgeIconView UI 추가
             object : BadgeIconView(
-                badge?.iconImage
+                badge.iconImage
             ) {
                 override fun defineStyleType(): HTIconBadgeStyle {
                     return targetStyle
@@ -100,8 +108,8 @@ open class HTIconBadgeView(
 
             //BadgeView UI 추가
             object : BadgeView(
-                badgeCount = badge?.count,
-                logic = badge?.iconBadgeLogic
+                badgeCount = badge.count,
+                logic = badge.iconBadgeLogic
             ) {
                 override fun defineStyleType(): HTIconBadgeStyle {
                     return targetStyle
