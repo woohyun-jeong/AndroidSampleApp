@@ -2,22 +2,32 @@ package com.example.sampleapp.core.ui
 
 import HTIndicatorStyle
 import HTIndicatorView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 
 
 private val style = HTIndicatorStyle(
-    /*badgeModifier = Modifier.fillMaxSize(),
-    badgeTextStyle = Typography.bodyMediumR.copy(),
-    badgeTextSize = 8.sp,
-    iconModifier = Modifier
-        .fillMaxSize()
-        .background(Color.Gray)
-        .padding(2.dp),*/
+    indicatorModifier = Modifier.size(10.dp),
+    indicatorShapeColor = Color.Cyan,
+    indicatorShape = RectangleShape,
+    indicatorIntervalPadding = 10.dp,
+    indicatorShapeActiveColor = Color.Green,
+    indicatorHorizontalArrangement = Arrangement.Center,
+    indicatorVerticalArrangement = Alignment.CenterVertically
 )
 
 //예제 테스트 용 코드
@@ -31,7 +41,7 @@ fun HTIndicatorBadge() {
     }
 
     val defaultLayoutModifier = Modifier
-        .fillMaxSize()
+        .fillMaxWidth().height(100.dp).background(Color.Magenta)
 
     val defaultIndicator = HTIndicatorView.Indicator(
         indicatorCount = 10,

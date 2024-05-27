@@ -1,4 +1,5 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -10,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -21,6 +23,14 @@ import com.example.sampleapp.core.designsystem.base.BaseViewData
 
 
 /**
+ * HTIndicatorStyle
+ *
+ * @property indicatorModifier
+ * @property indicatorIntervalPadding
+ * @property indicatorShape
+ * @property indicatorShapeColor
+ * @property indicatorShapeActiveColor
+ * @property indicatorHorizontalArrangement
  */
 open class HTIndicatorStyle(
     var indicatorModifier: Modifier? = null,
@@ -28,17 +38,27 @@ open class HTIndicatorStyle(
     val indicatorShape: Shape? = null,
     val indicatorShapeColor: Color? = null,
     val indicatorShapeActiveColor: Color? = null,
-    val indicatorBackgroundColor: Color? = null
+    val indicatorHorizontalArrangement: Arrangement.Horizontal? = null,
+    val indicatorVerticalArrangement: Alignment.Vertical? = null
 ) : BaseStyle
 
 
 /**
+ * HTIndicatorView
+ *
+ * @property layoutModifier
+ * @property indicator
  */
 open class HTIndicatorView(
     protected val layoutModifier: Modifier? = null, protected val indicator: BaseViewData
 ) : BaseComposeView, BaseComposeView.ComposeViewStyle<BaseStyle> {
 
     /**
+     * Indicator
+     *
+     * @property indicatorCount
+     * @property indicatorCurrentPosition
+     * @property indicatorClickEvent
      */
     @Immutable
     data class Indicator(
@@ -57,20 +77,26 @@ open class HTIndicatorView(
         )
 
         val targetStyle = defineStyleType()
-        val defaultLayoutModifier = layoutModifier ?: Modifier
+        val layoutModifier = layoutModifier ?: Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(targetStyle.indicatorBackgroundColor ?: Color.LightGray)
+            .background(Color.LightGray)
+        val indicatorHorizontalArrangement = targetStyle.indicatorHorizontalArrangement ?: Arrangement.Center
+        val indicatorVerticalAlignment = targetStyle.indicatorVerticalArrangement ?: Alignment.CenterVertically
 
         //View 초기화
         LazyRow(
-            modifier = defaultLayoutModifier
+            modifier = layoutModifier,
+            horizontalArrangement = indicatorHorizontalArrangement,
+            verticalAlignment = indicatorVerticalAlignment
         ) {
             items(count = indicator.indicatorCount) { indicatorPosition ->
                 //BadgeIconView UI 추가
                 val indicatorIntervalPadding = targetStyle.indicatorIntervalPadding ?: 2.dp
 
-                Spacer(modifier = Modifier.width(indicatorIntervalPadding))
+                if (indicatorPosition > 0)
+                    Spacer(modifier = Modifier.width(indicatorIntervalPadding))
+
                 object : IndicatorItemView(
                     modifier = targetStyle.indicatorModifier,
                     position = indicatorPosition,
@@ -87,6 +113,14 @@ open class HTIndicatorView(
         }
     }
 
+    /**
+     * IndicatorItemView
+     *
+     * @property modifier
+     * @property position
+     * @property isActive
+     * @property indicatorClickEvent
+     */
     open class IndicatorItemView(
         protected val modifier: Modifier? = null,
         protected val position: Int = 0,
