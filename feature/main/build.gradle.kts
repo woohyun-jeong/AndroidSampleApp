@@ -16,5 +16,4 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.kotlinx.immutable)
-    implementation(files("./libs/library_module-release-1.0.8.aar"))
 }
